@@ -1,7 +1,7 @@
 import React from 'react';
 import { Language } from '../types';
 import { TRANSLATIONS } from '../data/translations';
-import { ShieldCheck, Award, Instagram, ArrowDown, Sparkles, Code2 } from 'lucide-react';
+import { ShieldCheck, Award, Instagram, ArrowDown, Sparkles } from 'lucide-react';
 import { playClickSound } from '../utils/sound';
 
 interface AwarenessHeroProps {

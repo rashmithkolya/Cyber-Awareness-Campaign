@@ -125,6 +125,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
       {/* Main Container */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 sm:py-12 flex-1 flex flex-col justify-center">
         
+        {/* Official Institutional Logo Showcase */}
+        <div className="flex items-center justify-center mb-6 animate-reveal-up">
+          <div className="flex flex-col items-center space-y-2 group cursor-pointer">
+            <div className="p-3.5 bg-slate-900/80 rounded-2xl border border-amber-500/30 shadow-xl shadow-amber-500/10 backdrop-blur-md group-hover:scale-105 group-hover:border-amber-400 transition duration-300">
+              <img
+                src="/gpt.svg"
+                alt="Government Polytechnic Bantwal"
+                className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <span className="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wider text-center">
+              Government Polytechnic Bantwal
+            </span>
+          </div>
+        </div>
+
         {/* Top Tagline Badge */}
         <div className="text-center mb-6 animate-reveal-up">
           <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500/15 via-purple-500/15 to-cyan-500/15 text-amber-300 border border-amber-500/30 uppercase tracking-widest shadow-lg shadow-amber-500/10 backdrop-blur-md">

@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from 'react';
 import { Language, UserData } from '../types';
 import { TRANSLATIONS } from '../data/translations';
-import { Download, Printer, Award, CheckCircle2, Sparkles, Shield, Cpu, Building2, Terminal, QrCode } from 'lucide-react';
+import { Download, Printer, Award, CheckCircle2, Sparkles, Shield, QrCode, Building2, Terminal } from 'lucide-react';
 import { playClickSound } from '../utils/sound';
 
 interface SectionCertificateProps {
@@ -43,230 +43,235 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
     window.print();
   };
 
-  const handleDownloadPng = () => {
+  const loadImage = (src: string): Promise<HTMLImageElement> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+      img.src = src;
+    });
+  };
+
+  const handleDownloadPng = async () => {
     playClickSound();
-    
-    // High Definition Print-Quality A4 Landscape Canvas Export (2100 x 1485 px)
-    const canvas = document.createElement('canvas');
-    const width = 2100;
-    const height = 1485;
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
 
-    // 1. Clean Crisp Ivory/White Background
-    const bgGrad = ctx.createLinearGradient(0, 0, width, height);
-    bgGrad.addColorStop(0, '#ffffff');
-    bgGrad.addColorStop(0.5, '#fdfbf7');
-    bgGrad.addColorStop(1, '#ffffff');
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, width, height);
+    try {
+      const [gptImg, clubImg] = await Promise.all([
+        loadImage('/gpt.svg'),
+        loadImage('/club.svg'),
+      ]);
 
-    // 2. Outer Decorative Deep Navy Blue Border
-    ctx.strokeStyle = '#0f172a';
-    ctx.lineWidth = 14;
-    ctx.strokeRect(45, 45, width - 90, height - 90);
+      const canvas = document.createElement('canvas');
+      const width = 2100;
+      const height = 1485;
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    // Inner Royal Gold Accent Border
-    ctx.strokeStyle = '#d97706';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(62, 62, width - 124, height - 124);
+      // 1. Clean Crisp White Background
+      const bgGrad = ctx.createLinearGradient(0, 0, width, height);
+      bgGrad.addColorStop(0, '#ffffff');
+      bgGrad.addColorStop(0.5, '#fdfbf7');
+      bgGrad.addColorStop(1, '#ffffff');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
 
-    // Delicate Thin Inner Navy Frame
-    ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(74, 74, width - 148, height - 148);
+      // 2. Outer Decorative Deep Navy Blue Border
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 14;
+      ctx.strokeRect(45, 45, width - 90, height - 90);
 
-    // Corner Filigree Ornaments
-    const drawCorner = (x: number, y: number, angle: number) => {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate((angle * Math.PI) / 180);
+      // Inner Royal Gold Accent Border
       ctx.strokeStyle = '#d97706';
       ctx.lineWidth = 4;
+      ctx.strokeRect(62, 62, width - 124, height - 124);
+
+      // Delicate Thin Inner Navy Frame
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(74, 74, width - 148, height - 148);
+
+      // Corner Filigree Ornaments
+      const drawCorner = (x: number, y: number, angle: number) => {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate((angle * Math.PI) / 180);
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(0, 45);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(45, 0);
+        ctx.stroke();
+        ctx.restore();
+      };
+      drawCorner(88, 88, 0);
+      drawCorner(width - 88, 88, 90);
+      drawCorner(width - 88, height - 88, 180);
+      drawCorner(88, height - 88, 270);
+
+      // 3. Faint Cybersecurity Watermark in Center Background
+      ctx.save();
+      ctx.translate(width / 2, height / 2 + 30);
+      ctx.globalAlpha = 0.04;
+      ctx.strokeStyle = '#1e3a8a';
+      ctx.lineWidth = 8;
       ctx.beginPath();
-      ctx.moveTo(0, 45);
-      ctx.lineTo(0, 0);
-      ctx.lineTo(45, 0);
+      ctx.moveTo(0, -180);
+      ctx.lineTo(160, -110);
+      ctx.lineTo(160, 60);
+      ctx.quadraticCurveTo(160, 180, 0, 240);
+      ctx.quadraticCurveTo(-160, 180, -160, 60);
+      ctx.lineTo(-160, -110);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, 20, 90, 0, Math.PI * 2);
+      ctx.lineWidth = 4;
       ctx.stroke();
       ctx.restore();
-    };
-    drawCorner(88, 88, 0);
-    drawCorner(width - 88, 88, 90);
-    drawCorner(width - 88, height - 88, 180);
-    drawCorner(88, height - 88, 270);
 
-    // 3. Faint Cybersecurity Watermark in Center Background
-    ctx.save();
-    ctx.translate(width / 2, height / 2 + 30);
-    ctx.globalAlpha = 0.035;
-    ctx.strokeStyle = '#1e3a8a';
-    ctx.lineWidth = 8;
-    // Outer watermark shield
-    ctx.beginPath();
-    ctx.moveTo(0, -180);
-    ctx.lineTo(160, -110);
-    ctx.lineTo(160, 60);
-    ctx.quadraticCurveTo(160, 180, 0, 240);
-    ctx.quadraticCurveTo(-160, 180, -160, 60);
-    ctx.lineTo(-160, -110);
-    ctx.closePath();
-    ctx.stroke();
+      // 4. Header Section: Logos & Titles
+      // Left Logo: Government Polytechnic Bantwal (gpt.svg)
+      ctx.drawImage(gptImg, 180, 120, 190, 190);
 
-    // Inner watermark gear/circuit ring
-    ctx.beginPath();
-    ctx.arc(0, 20, 90, 0, Math.PI * 2);
-    ctx.lineWidth = 4;
-    ctx.stroke();
-    ctx.restore();
+      // Right Logo: CSE Technical Club (club.svg)
+      ctx.drawImage(clubImg, width - 370, 120, 190, 190);
 
-    // 4. Header Section: Logos & Titles
-    // Left Emblem: Government Polytechnic Bantwal Crest Badge
-    ctx.save();
-    ctx.translate(220, 190);
-    ctx.beginPath();
-    ctx.arc(0, 0, 48, 0, 2 * Math.PI);
-    ctx.fillStyle = '#0f172a';
-    ctx.fill();
-    ctx.strokeStyle = '#d97706';
-    ctx.lineWidth = 4;
-    ctx.stroke();
+      // Center Institution Header Text
+      ctx.textAlign = 'center';
 
-    ctx.fillStyle = '#fbbf24';
-    ctx.font = 'bold 24px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('🏛️', 0, 8);
-    ctx.restore();
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 48px Georgia, serif';
+      ctx.fillText('GOVERNMENT POLYTECHNIC BANTWAL', width / 2, 165);
 
-    // Right Emblem: Technical Club Badge
-    ctx.save();
-    ctx.translate(width - 220, 190);
-    ctx.beginPath();
-    ctx.arc(0, 0, 48, 0, 2 * Math.PI);
-    ctx.fillStyle = '#0f172a';
-    ctx.fill();
-    ctx.strokeStyle = '#d97706';
-    ctx.lineWidth = 4;
-    ctx.stroke();
+      ctx.fillStyle = '#b45309';
+      ctx.font = 'bold 28px monospace';
+      ctx.fillText('TECHNICAL CLUB', width / 2, 218);
 
-    ctx.fillStyle = '#fbbf24';
-    ctx.font = 'bold 24px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('⚡', 0, 8);
-    ctx.restore();
+      ctx.fillStyle = '#475569';
+      ctx.font = '600 24px sans-serif';
+      ctx.fillText('DEPARTMENT OF COMPUTER SCIENCE ENGINEERING (CSE)', width / 2, 260);
 
-    // Institution Text Header (Center)
-    ctx.textAlign = 'center';
+      // Decorative Horizontal Gold Line
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(width / 2 - 480, 300);
+      ctx.lineTo(width / 2 + 480, 300);
+      ctx.stroke();
 
-    ctx.fillStyle = '#0f172a';
-    ctx.font = 'bold 36px Georgia, serif';
-    ctx.fillText('GOVERNMENT POLYTECHNIC BANTWAL', width / 2, 170);
+      // 5. Main Title: CERTIFICATE OF PARTICIPATION
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 72px Georgia, serif';
+      ctx.fillText('CERTIFICATE OF PARTICIPATION', width / 2, 410);
 
-    ctx.fillStyle = '#d97706';
-    ctx.font = 'bold 20px monospace';
-    ctx.fillText('TECHNICAL CLUB', width / 2, 210);
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'italic 32px Georgia, serif';
+      ctx.fillText('This is to certify that', width / 2, 490);
 
-    ctx.fillStyle = '#475569';
-    ctx.font = '600 18px sans-serif';
-    ctx.fillText('DEPARTMENT OF COMPUTER SCIENCE ENGINEERING (CSE)', width / 2, 240);
+      // 6. Recipient Name
+      ctx.fillStyle = '#1e3a8a';
+      ctx.font = 'bold 92px Georgia, serif';
+      ctx.fillText(participantName, width / 2, 620);
 
-    // Decorative Horizontal Gold Accent Line
-    ctx.strokeStyle = '#d97706';
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    ctx.moveTo(width / 2 - 350, 265);
-    ctx.lineTo(width / 2 + 350, 265);
-    ctx.stroke();
+      // Underline Bar beneath Name
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 4.5;
+      ctx.beginPath();
+      ctx.moveTo(width / 2 - 530, 660);
+      ctx.lineTo(width / 2 + 530, 660);
+      ctx.stroke();
 
-    // 5. Main Title: CERTIFICATE OF PARTICIPATION
-    ctx.fillStyle = '#0f172a';
-    ctx.font = 'bold 52px Georgia, serif';
-    ctx.fillText('CERTIFICATE OF PARTICIPATION', width / 2, 350);
+      // 7. Participation Citation
+      ctx.fillStyle = '#334155';
+      ctx.font = '30px sans-serif';
+      ctx.fillText('has actively participated in the Cyber Security Awareness Training,', width / 2, 755);
+      ctx.fillText('Phishing Prevention Demonstration, and Scam Verification Assessment.', width / 2, 805);
 
-    ctx.fillStyle = '#64748b';
-    ctx.font = 'italic 24px Georgia, serif';
-    ctx.fillText('This is to certify that', width / 2, 420);
+      // 8. Quiz Score & Completion Badge (if passed)
+      let currentY = 875;
+      if (isUnlocked) {
+        ctx.fillStyle = '#ecfdf5';
+        ctx.strokeStyle = '#059669';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        if (typeof (ctx as any).roundRect === 'function') {
+          (ctx as any).roundRect(width / 2 - 360, currentY, 720, 64, 32);
+        } else {
+          ctx.rect(width / 2 - 360, currentY, 720, 64);
+        }
+        ctx.fill();
+        ctx.stroke();
 
-    // 6. Recipient Name
-    ctx.fillStyle = '#1e3a8a';
-    ctx.font = 'bold 62px Georgia, serif';
-    ctx.fillText(participantName, width / 2, 515);
+        ctx.fillStyle = '#047857';
+        ctx.font = 'bold 26px sans-serif';
+        ctx.fillText('✓ Quiz Score: 100% • Verified Pass', width / 2, currentY + 42);
 
-    // Underline Bar beneath Name
-    ctx.strokeStyle = '#d97706';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(width / 2 - 400, 545);
-    ctx.lineTo(width / 2 + 400, 545);
-    ctx.stroke();
+        currentY += 95;
+      } else {
+        currentY += 20;
+      }
 
-    // 7. Participation Statement
-    ctx.fillStyle = '#334155';
-    ctx.font = '24px sans-serif';
-    ctx.fillText('has actively participated in the Cyber Security Awareness Training,', width / 2, 620);
-    ctx.fillText('Phishing Prevention Demonstration, and Scam Verification Assessment.', width / 2, 660);
-
-    // 8. Quiz Score & Completion Badge (if passed)
-    if (isUnlocked) {
-      ctx.fillStyle = '#ecfdf5';
-      ctx.strokeStyle = '#059669';
-      ctx.lineWidth = 1.5;
-      ctx.roundRect(width / 2 - 250, 705, 500, 48, 24);
+      // 9. Campaign Tagline Box
+      ctx.fillStyle = '#fffbe2';
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      if (typeof (ctx as any).roundRect === 'function') {
+        (ctx as any).roundRect(width / 2 - 600, currentY, 1200, 80, 18);
+      } else {
+        ctx.rect(width / 2 - 600, currentY, 1200, 80);
+      }
       ctx.fill();
       ctx.stroke();
 
-      ctx.fillStyle = '#047857';
-      ctx.font = 'bold 20px sans-serif';
-      ctx.fillText('✓ Assessment Passed • Score: 100% / Verified', width / 2, 736);
+      ctx.fillStyle = '#92400e';
+      ctx.font = 'italic bold 34px Georgia, serif';
+      ctx.fillText('“Think Before You Click. Verify Before You Trust.”', width / 2, currentY + 51);
+
+      // 10. Provision Statement
+      currentY += 130;
+      ctx.fillStyle = '#1e293b';
+      ctx.font = '600 25px sans-serif';
+      ctx.fillText('Provided by Technical Club, Computer Science Engineering (CSE), Government Polytechnic Bantwal.', width / 2, currentY);
+
+      // Separator Line
+      currentY += 50;
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(180, currentY);
+      ctx.lineTo(width - 180, currentY);
+      ctx.stroke();
+
+      // 11. Footer: Date & Certificate ID
+      currentY += 65;
+      ctx.fillStyle = '#475569';
+      ctx.font = 'bold 26px monospace';
+
+      ctx.textAlign = 'left';
+      ctx.fillText(`DATE: ${todayDate}`, 180, currentY);
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#b45309';
+      ctx.fillText(`STATUS: VERIFIED CREDENTIAL`, width / 2, currentY);
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#1e3a8a';
+      ctx.fillText(`CERTIFICATE ID: ${certId}`, width - 180, currentY);
+
+      // Download PNG
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = `Cyber_Security_Certificate_${participantName.replace(/\s+/g, '_')}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error('Failed to export certificate image:', err);
     }
-
-    // 9. Campaign Tagline Box
-    ctx.fillStyle = '#fef3c7';
-    ctx.strokeStyle = '#f59e0b';
-    ctx.lineWidth = 1.5;
-    ctx.roundRect(width / 2 - 450, 790, 900, 60, 12);
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.fillStyle = '#92400e';
-    ctx.font = 'italic bold 26px Georgia, serif';
-    ctx.fillText('“Think Before You Click. Verify Before You Trust.”', width / 2, 829);
-
-    // 10. Provision Statement
-    ctx.fillStyle = '#1e293b';
-    ctx.font = '600 20px sans-serif';
-    ctx.fillText('Provided by Technical Club, Computer Science Engineering (CSE), Government Polytechnic Bantwal.', width / 2, 915);
-
-    // Decorative Separator Line
-    ctx.strokeStyle = '#cbd5e1';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(180, 960);
-    ctx.lineTo(width - 180, 960);
-    ctx.stroke();
-
-    // 11. Footer: Date & Certificate ID
-    ctx.fillStyle = '#475569';
-    ctx.font = 'bold 20px monospace';
-    
-    ctx.textAlign = 'left';
-    ctx.fillText(`DATE: ${todayDate}`, 180, 1010);
-
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#d97706';
-    ctx.fillText(`STATUS: VERIFIED CREDENTIAL`, width / 2, 1010);
-
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#1e3a8a';
-    ctx.fillText(`CERTIFICATE ID: ${certId}`, width - 180, 1010);
-
-    // Download PNG
-    const dataUrl = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.download = `Cyber_Security_Certificate_of_Participation_${participantName.replace(/\s+/g, '_')}.png`;
-    link.href = dataUrl;
-    link.click();
   };
 
   return (
@@ -310,91 +315,97 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
         <div
           id="certificate-frame"
           ref={certRef}
-          className="min-w-[800px] max-w-4xl mx-auto bg-white text-slate-900 border-[10px] border-slate-900 rounded-2xl p-8 sm:p-12 shadow-2xl relative overflow-hidden text-center space-y-6 aspect-[297/210] flex flex-col justify-between"
+          className="min-w-[850px] max-w-5xl mx-auto bg-white text-slate-900 border-[12px] border-slate-900 rounded-2xl p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden text-center space-y-6 aspect-[297/210] flex flex-col justify-between"
         >
           {/* Inner Golden Accent Border Frame */}
           <div className="absolute inset-3 border-2 border-amber-600 pointer-events-none rounded-xl" />
           <div className="absolute inset-4 border border-slate-300 pointer-events-none rounded-lg" />
 
           {/* Corner Filigree Highlights */}
-          <div className="absolute top-5 left-5 w-8 h-8 border-t-4 border-l-4 border-amber-600 pointer-events-none" />
-          <div className="absolute top-5 right-5 w-8 h-8 border-t-4 border-r-4 border-amber-600 pointer-events-none" />
-          <div className="absolute bottom-5 left-5 w-8 h-8 border-b-4 border-l-4 border-amber-600 pointer-events-none" />
-          <div className="absolute bottom-5 right-5 w-8 h-8 border-b-4 border-r-4 border-amber-600 pointer-events-none" />
+          <div className="absolute top-5 left-5 w-10 h-10 border-t-4 border-l-4 border-amber-600 pointer-events-none" />
+          <div className="absolute top-5 right-5 w-10 h-10 border-t-4 border-r-4 border-amber-600 pointer-events-none" />
+          <div className="absolute bottom-5 left-5 w-10 h-10 border-b-4 border-l-4 border-amber-600 pointer-events-none" />
+          <div className="absolute bottom-5 right-5 w-10 h-10 border-b-4 border-r-4 border-amber-600 pointer-events-none" />
 
           {/* Background Cybersecurity Watermark */}
           <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none">
-            <Shield className="w-96 h-96 text-blue-900 stroke-[1]" />
+            <Shield className="w-[450px] h-[450px] text-blue-900 stroke-[1]" />
           </div>
 
-          {/* Top Header Row with Logos & Institutions */}
+          {/* Top Header Row with Official Logos & Institutions */}
           <div className="relative z-10 space-y-3">
             <div className="flex items-center justify-between px-4 sm:px-8">
-              {/* Left Logo: Government Polytechnic Bantwal Emblem */}
+              {/* Left Logo: Government Polytechnic Bantwal */}
               <div className="flex items-center space-x-2">
-                <div className="w-12 h-12 rounded-full bg-slate-900 border-2 border-amber-500 flex items-center justify-center text-amber-400 shadow-md">
-                  <Building2 className="w-6 h-6" />
-                </div>
+                <img
+                  src="/gpt.svg"
+                  alt="Government Polytechnic Bantwal Emblem"
+                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
+                  referrerPolicy="no-referrer"
+                />
               </div>
 
               {/* Center Institution Titles */}
-              <div className="text-center space-y-0.5">
-                <h3 className="text-lg sm:text-2xl font-black font-serif text-slate-900 tracking-wide uppercase">
+              <div className="text-center space-y-1">
+                <h3 className="text-xl sm:text-3xl font-black font-serif text-slate-900 tracking-wide uppercase">
                   Government Polytechnic Bantwal
                 </h3>
-                <p className="text-xs sm:text-sm font-mono font-bold text-amber-700 tracking-wider uppercase">
+                <p className="text-xs sm:text-base font-mono font-bold text-amber-700 tracking-wider uppercase">
                   Technical Club
                 </p>
-                <p className="text-[11px] sm:text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                <p className="text-[11px] sm:text-xs lg:text-sm font-semibold text-slate-600 uppercase tracking-wide">
                   Department of Computer Science Engineering (CSE)
                 </p>
               </div>
 
-              {/* Right Logo: Technical Club Emblem */}
+              {/* Right Logo: CSE Technical Club */}
               <div className="flex items-center space-x-2">
-                <div className="w-12 h-12 rounded-full bg-slate-900 border-2 border-amber-500 flex items-center justify-center text-amber-400 shadow-md">
-                  <Terminal className="w-6 h-6" />
-                </div>
+                <img
+                  src="/club.svg"
+                  alt="CSE Technical Club Emblem"
+                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
+                  referrerPolicy="no-referrer"
+                />
               </div>
             </div>
 
-            <div className="w-3/4 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-auto" />
+            <div className="w-4/5 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-auto" />
           </div>
 
           {/* Certificate Main Title & Recipient Section */}
           <div className="relative z-10 space-y-4 my-auto">
             <div className="space-y-1">
-              <h1 className="text-2xl sm:text-4xl font-serif font-black tracking-wider text-slate-900 uppercase">
+              <h1 className="text-3xl sm:text-5xl font-serif font-black tracking-wider text-slate-900 uppercase">
                 Certificate of Participation
               </h1>
-              <p className="text-xs sm:text-sm text-slate-500 font-serif italic">
+              <p className="text-sm sm:text-lg text-slate-500 font-serif italic">
                 This is to certify that
               </p>
             </div>
 
             {/* Recipient Name */}
-            <div className="py-1">
-              <h2 className="text-3xl sm:text-5xl font-serif font-black text-blue-900 tracking-tight">
+            <div className="py-2">
+              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-black text-blue-900 tracking-tight">
                 {participantName}
               </h2>
-              <div className="w-1/2 h-1 bg-amber-600 mx-auto mt-2 rounded-full" />
+              <div className="w-3/5 h-1.5 bg-amber-600 mx-auto mt-2 rounded-full" />
             </div>
 
             {/* Participation Citation Statement */}
-            <p className="text-xs sm:text-sm text-slate-700 max-w-2xl mx-auto leading-relaxed font-sans px-4">
+            <p className="text-xs sm:text-base lg:text-lg text-slate-700 max-w-3xl mx-auto leading-relaxed font-sans px-4">
               has actively participated in the Cyber Security Awareness Training, Phishing Prevention Demonstration, and Scam Verification Assessment.
             </p>
 
             {/* Optional Quiz Score Badge */}
             {isUnlocked && (
-              <div className="inline-flex items-center space-x-1.5 px-4 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-sm">
+              <div className="inline-flex items-center space-x-2 px-5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-bold shadow-sm">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 <span>Quiz Score: 100% • Verified Pass</span>
               </div>
             )}
 
             {/* Campaign Tagline Box */}
-            <div className="inline-block px-6 py-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-serif italic text-xs sm:text-sm font-semibold shadow-sm">
+            <div className="inline-block px-8 py-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-serif italic text-xs sm:text-base lg:text-lg font-semibold shadow-sm">
               “Think Before You Click. Verify Before You Trust.”
             </div>
           </div>
@@ -402,24 +413,24 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
           {/* Provision & Verification Footer Section */}
           <div className="relative z-10 space-y-3 pt-3 border-t border-slate-200">
             {/* Explicit Provision Note */}
-            <p className="text-xs font-semibold text-slate-800">
+            <p className="text-xs sm:text-sm font-semibold text-slate-800">
               Provided by Technical Club, Computer Science Engineering (CSE), Government Polytechnic Bantwal.
             </p>
 
             {/* Metadata Footer: Date, Verification ID */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-slate-600 pt-1">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-slate-600 pt-1">
               <div className="flex items-center space-x-1">
                 <span className="text-slate-400">Date:</span>
                 <span className="font-bold text-slate-800">{todayDate}</span>
               </div>
 
               <div className="flex items-center space-x-1 text-amber-700 font-bold">
-                <Shield className="w-3.5 h-3.5" />
+                <Shield className="w-4 h-4" />
                 <span>Verified Credential</span>
               </div>
 
               <div className="flex items-center space-x-1 text-blue-900 font-bold">
-                <QrCode className="w-3.5 h-3.5 text-slate-400" />
+                <QrCode className="w-4 h-4 text-slate-400" />
                 <span className="text-slate-400">Certificate ID:</span>
                 <span className="font-extrabold">{certId}</span>
               </div>

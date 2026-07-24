@@ -1,7 +1,7 @@
 import React from 'react';
 import { Language } from '../types';
 import { TRANSLATIONS } from '../data/translations';
-import { MessageSquare, ShieldCheck, Heart, Instagram, Sparkles, Code2 } from 'lucide-react';
+import { MessageSquare, ShieldCheck, Instagram, Sparkles } from 'lucide-react';
 
 interface FooterAndFeedbackProps {
   lang: Language;
@@ -32,7 +32,7 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
         {/* Embedded Responsive Form Container */}
         <div className="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden min-h-[480px] relative">
           <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSc_sample_feedback_form/viewform?embedded=true"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfSATcu-zVb_vmUFjeVCDx8iEuW1p3bSndcF6MJrPZexr1WGw/viewform?embedded=true"
             width="100%"
             height="520"
             className="w-full h-[520px] border-0"
@@ -59,6 +59,22 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
 
         {/* Requested Campaign & Developer Credits Footer Card */}
         <div className="max-w-md mx-auto bg-slate-900/90 border border-amber-500/40 rounded-2xl p-6 shadow-2xl space-y-4 animate-highlight-glow backdrop-blur-md">
+          {/* Official Logos Header */}
+          <div className="flex items-center justify-center space-x-4 pb-1">
+            <img
+              src="/gpt.svg"
+              alt="Government Polytechnic Bantwal Logo"
+              className="w-12 h-12 object-contain drop-shadow"
+              referrerPolicy="no-referrer"
+            />
+            <img
+              src="/club.svg"
+              alt="Technical Club Logo"
+              className="w-12 h-12 object-contain drop-shadow"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+
           <div className="space-y-1">
             <h3 className="text-base sm:text-lg font-black tracking-wide text-white uppercase">
               Cyber Awareness Campaign

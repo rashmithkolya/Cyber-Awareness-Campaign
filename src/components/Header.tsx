@@ -1,7 +1,7 @@
 import React from 'react';
 import { Language, AppStage } from '../types';
 import { TRANSLATIONS } from '../data/translations';
-import { Shield, Volume2, VolumeX, Sparkles, Globe } from 'lucide-react';
+import { Volume2, VolumeX, Sparkles, Globe, Shield } from 'lucide-react';
 import { playClickSound } from '../utils/sound';
 
 interface HeaderProps {
@@ -29,23 +29,31 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-white transition-all shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        {/* Brand & Logos */}
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-emerald-500 p-0.5 shadow-md flex items-center justify-center">
-            <div className="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
-              <Shield className="w-5 h-5 text-amber-400" />
-            </div>
-          </div>
+        {/* Brand with Official Logos */}
+        <div className="flex items-center space-x-2.5 sm:space-x-3">
+          <img
+            src="/gpt.svg"
+            alt="Government Polytechnic Bantwal Logo"
+            className="w-10 h-10 sm:w-11 sm:h-11 object-contain drop-shadow hover:scale-105 transition-transform shrink-0"
+            referrerPolicy="no-referrer"
+          />
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
               <span className="text-xs sm:text-sm font-bold tracking-tight text-slate-100">
                 Government Polytechnic Bantwal
               </span>
+              <span className="hidden sm:inline text-slate-600 text-xs">•</span>
               <span className="inline-block text-[11px] font-medium text-amber-400/90">
-                Department of Computer Science Engineering • Technical Club
+                CSE Department • Technical Club
               </span>
             </div>
           </div>
+          <img
+            src="/club.svg"
+            alt="Technical Club Logo"
+            className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow hover:scale-105 transition-transform shrink-0"
+            referrerPolicy="no-referrer"
+          />
         </div>
 
         {/* Action Controls */}
