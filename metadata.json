@@ -1,0 +1,6 @@
+{
+  "name": "Cyber Awareness Campaign",
+  "description": "An interactive, cinematic cyber awareness experience featuring the GPT Reward Hunt lesson, interactive security challenges, bilingual support, and local certificate generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

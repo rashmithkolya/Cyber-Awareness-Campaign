@@ -1,0 +1,341 @@
+@import "tailwindcss";
+
+@keyframes highlightGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), 0 0 25px rgba(16, 185, 129, 0.2);
+    border-color: rgba(245, 158, 11, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.6), 0 0 35px rgba(6, 182, 212, 0.4);
+    border-color: rgba(16, 185, 129, 0.8);
+  }
+}
+
+@keyframes shimmerText {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-highlight-glow {
+  animation: highlightGlow 3s ease-in-out infinite;
+}
+
+.animate-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #f59e0b 0%,
+    #38bdf8 25%,
+    #34d399 50%,
+    #f59e0b 75%,
+    #38bdf8 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmerText 3.5s linear infinite;
+}
+
+/* Background Cyber Animation Keyframes & Text Reveal Composition */
+@keyframes cyberScanline {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(1200%);
+    opacity: 0;
+  }
+}
+
+@keyframes cyberGridMotion {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
+}
+
+@keyframes floatParticleRise {
+  0% {
+    transform: translateY(105vh) scale(0.6) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-15vh) scale(1.15) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes orbFloat {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(40px, -50px) scale(1.2);
+  }
+  66% {
+    transform: translate(-35px, 30px) scale(0.85);
+  }
+}
+
+@keyframes pulseGlowRing {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.08) rotate(180deg);
+    opacity: 0.35;
+  }
+}
+
+@keyframes fadeInUpReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes textShimmerGlow {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-scanline {
+  animation: cyberScanline 7s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-cyber-grid {
+  animation: cyberGridMotion 16s linear infinite;
+}
+
+.animate-orb-1 {
+  animation: orbFloat 14s ease-in-out infinite;
+}
+
+.animate-orb-2 {
+  animation: orbFloat 18s ease-in-out infinite reverse;
+}
+
+.animate-orb-3 {
+  animation: orbFloat 12s ease-in-out infinite 3s;
+}
+
+.animate-ring-pulse {
+  animation: pulseGlowRing 20s ease-in-out infinite;
+}
+
+.animate-reveal-up {
+  animation: fadeInUpReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-reveal-delay-1 {
+  animation: fadeInUpReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.animate-reveal-delay-2 {
+  animation: fadeInUpReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.text-composition-title {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 40%, #fbbf24 75%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+
+.text-composition-sub {
+  color: #cbd5e1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* GPU Acceleration Helpers & Hardware Layering */
+.gpu-layer {
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* 3D Glass Perspective Container */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Wireframe Dissolve Grid Overlay */
+.bg-wireframe-grid {
+  background-image: 
+    linear-gradient(to right, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Camera Vibration Keyframes for Freeze Scene */
+@keyframes cameraVibrate {
+  0% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(-3px, 2px, 0) rotate(-0.5deg); }
+  40% { transform: translate3d(3px, -2px, 0) rotate(0.5deg); }
+  60% { transform: translate3d(-2px, -3px, 0) rotate(-0.3deg); }
+  80% { transform: translate3d(2px, 3px, 0) rotate(0.3deg); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.animate-camera-vibrate {
+  animation: cameraVibrate 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Light Sweep Beam for Magnetic CTA & Cards */
+@keyframes lightSweep {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(25deg);
+  }
+}
+
+.animate-light-sweep {
+  animation: lightSweep 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* SVG Line Drawing Path Keyframes */
+@keyframes drawPath {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-svg-draw {
+  stroke-dasharray: 1000;
+  animation: drawPath 2s ease-out forwards;
+}
+
+/* Radar Scan Rotation */
+@keyframes radarSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-spin {
+  animation: radarSpin 4s linear infinite;
+}
+
+/* Stamp Verification Pulse */
+@keyframes stampIn {
+  0% {
+    opacity: 0;
+    transform: scale(2.2) rotate(-15deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(0.9) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.animate-stamp-in {
+  animation: stampIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Reduced Motion Override Rules for Accessibility & Battery Efficiency */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .gpu-layer {
+    will-change: auto;
+  }
+}
+
+/* Print Rules for A4 Landscape Certificate Export */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide everything except the certificate frame when printing */
+  body > * {
+    display: none !important;
+  }
+
+  #root, main, #certificate-section {
+    display: block !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Hide all non-certificate children */
+  header, footer, nav, button, .no-print {
+    display: none !important;
+  }
+
+  #certificate-frame {
+    display: block !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 2.5rem !important;
+    box-sizing: border-box !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    page-break-inside: avoid;
+  }
+}
