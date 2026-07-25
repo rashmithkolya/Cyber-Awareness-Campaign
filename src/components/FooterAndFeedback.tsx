@@ -62,13 +62,13 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
           {/* Official Logos Header */}
           <div className="flex items-center justify-center space-x-4 pb-1">
             <img
-              src="/gpt.svg"
+              src="/assets/gpt.png"
               alt="Government Polytechnic Bantwal Logo"
               className="w-12 h-12 object-contain drop-shadow"
               referrerPolicy="no-referrer"
             />
             <img
-              src="/club.svg"
+              src="/assets/club.png"
               alt="Technical Club Logo"
               className="w-12 h-12 object-contain drop-shadow"
               referrerPolicy="no-referrer"

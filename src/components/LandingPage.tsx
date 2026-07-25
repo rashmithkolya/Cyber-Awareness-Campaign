@@ -125,21 +125,28 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
       {/* Main Container */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 sm:py-12 flex-1 flex flex-col justify-center">
         
-        {/* Official Institutional Logo Showcase */}
-        <div className="flex items-center justify-center mb-6 animate-reveal-up">
-          <div className="flex flex-col items-center space-y-2 group cursor-pointer">
-            <div className="p-3.5 bg-slate-900/80 rounded-2xl border border-amber-500/30 shadow-xl shadow-amber-500/10 backdrop-blur-md group-hover:scale-105 group-hover:border-amber-400 transition duration-300">
-              <img
-                src="/gpt.svg"
-                alt="Government Polytechnic Bantwal"
-                className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <span className="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wider text-center">
+        {/* Institutional Branding with Official Logos */}
+        <div className="flex items-center justify-center space-x-4 mb-6 animate-reveal-up">
+          <img
+            src="/assets/gpt.png"
+            alt="Government Polytechnic Bantwal"
+            className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-md hover:scale-105 transition-transform"
+            referrerPolicy="no-referrer"
+          />
+          <div className="flex flex-col items-center space-y-1">
+            <span className="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-widest text-center">
               Government Polytechnic Bantwal
             </span>
+            <span className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider text-center">
+              CSE Department • Technical Club
+            </span>
           </div>
+          <img
+            src="/assets/club.png"
+            alt="Technical Club Logo"
+            className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-md hover:scale-105 transition-transform"
+            referrerPolicy="no-referrer"
+          />
         </div>
 
         {/* Top Tagline Badge */}
@@ -253,10 +260,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+              <label htmlFor="student-name" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
                 {t.nameLabel}
               </label>
               <input
+                id="student-name"
                 type="text"
                 required
                 value={name}
@@ -268,10 +276,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="student-phone" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
                   {t.phoneLabel}
                 </label>
                 <input
+                  id="student-phone"
                   type="tel"
                   required
                   value={phone}
@@ -282,10 +291,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="student-email" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
                   {t.emailLabel}
                 </label>
                 <input
+                  id="student-email"
                   type="email"
                   required
                   value={email}

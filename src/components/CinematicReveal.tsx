@@ -57,12 +57,33 @@ export const CinematicReveal: React.FC<CinematicRevealProps> = ({
   return (
     <div className={`fixed inset-0 z-50 bg-slate-950 text-white flex items-center justify-center p-4 sm:p-6 overflow-hidden ${isShaking ? 'animate-camera-vibrate' : ''}`}>
       
-      {/* 1. Wireframe Grid & Atmospheric Desaturation Overlay */}
-      <div className="absolute inset-0 bg-wireframe-grid opacity-20 pointer-events-none" />
-      <div className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${scene >= 2 ? 'bg-slate-950/90 backdrop-grayscale' : 'bg-emerald-950/30'}`} />
+      {/* Skip Button for quick navigation */}
+      {scene < 5 && (
+        <button
+          onClick={() => {
+            playClickSound();
+            setScene(5);
+          }}
+          className="absolute top-4 right-4 z-50 px-3.5 py-1.5 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-300 hover:text-white transition flex items-center space-x-1 cursor-pointer"
+        >
+          <span>Skip Reveal</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </button>
+      )}
+
+      {/* 1. Pulsing Ambient Background Glow Orbs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[120px] transition-all duration-1000 ${scene === 1 ? 'bg-emerald-500/20' : scene === 2 ? 'bg-rose-600/25 scale-125' : 'bg-amber-500/20'}`} />
+        <div className="absolute top-10 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+      </div>
+
+      {/* 3. Wireframe Grid & Atmospheric Desaturation Overlay */}
+      <div className="absolute inset-0 bg-wireframe-grid opacity-25 pointer-events-none" />
+      <div className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${scene >= 2 ? 'bg-slate-950/80 backdrop-grayscale' : 'bg-emerald-950/20'}`} />
       
-      {/* 2. Horizontal Cyber Laser Sweep Line */}
-      <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent blur-[1px] animate-scanline pointer-events-none" />
+      {/* 4. Horizontal Cyber Laser Sweep Line */}
+      <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent blur-[1px] animate-scanline pointer-events-none" />
 
       {/* Main Container */}
       <div className="relative z-10 max-w-2xl w-full text-center space-y-6">

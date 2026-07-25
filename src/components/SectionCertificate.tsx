@@ -43,13 +43,37 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
     window.print();
   };
 
-  const loadImage = (src: string): Promise<HTMLImageElement> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
-      img.src = src;
+  const loadImage = async (src: string): Promise<HTMLImageElement | null> => {
+    return new Promise((resolve) => {
+      fetch(src)
+        .then((res) => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.blob();
+        })
+        .then((blob) => {
+          const url = URL.createObjectURL(blob);
+          const img = new Image();
+          img.onload = () => {
+            URL.revokeObjectURL(url);
+            resolve(img);
+          };
+          img.onerror = () => {
+            URL.revokeObjectURL(url);
+            // Fallback: direct src assignment without crossOrigin
+            const fallbackImg = new Image();
+            fallbackImg.onload = () => resolve(fallbackImg);
+            fallbackImg.onerror = () => resolve(null);
+            fallbackImg.src = src;
+          };
+          img.src = url;
+        })
+        .catch(() => {
+          // Fallback: direct src assignment without crossOrigin
+          const fallbackImg = new Image();
+          fallbackImg.onload = () => resolve(fallbackImg);
+          fallbackImg.onerror = () => resolve(null);
+          fallbackImg.src = src;
+        });
     });
   };
 
@@ -58,8 +82,8 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
 
     try {
       const [gptImg, clubImg] = await Promise.all([
-        loadImage('/gpt.svg'),
-        loadImage('/club.svg'),
+        loadImage('/assets/gpt.png'),
+        loadImage('/assets/club.png'),
       ]);
 
       const canvas = document.createElement('canvas');
@@ -134,11 +158,15 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
       ctx.restore();
 
       // 4. Header Section: Logos & Titles
-      // Left Logo: Government Polytechnic Bantwal (gpt.svg)
-      ctx.drawImage(gptImg, 180, 120, 190, 190);
+      // Left Logo: Government Polytechnic Bantwal (gpt.png)
+      if (gptImg) {
+        ctx.drawImage(gptImg, 180, 120, 190, 190);
+      }
 
-      // Right Logo: CSE Technical Club (club.svg)
-      ctx.drawImage(clubImg, width - 370, 120, 190, 190);
+      // Right Logo: CSE Technical Club (club.png)
+      if (clubImg) {
+        ctx.drawImage(clubImg, width - 370, 120, 190, 190);
+      }
 
       // Center Institution Header Text
       ctx.textAlign = 'center';
@@ -338,7 +366,7 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
               {/* Left Logo: Government Polytechnic Bantwal */}
               <div className="flex items-center space-x-2">
                 <img
-                  src="/gpt.svg"
+                  src="/assets/gpt.png"
                   alt="Government Polytechnic Bantwal Emblem"
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
                   referrerPolicy="no-referrer"
@@ -361,7 +389,7 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
               {/* Right Logo: CSE Technical Club */}
               <div className="flex items-center space-x-2">
                 <img
-                  src="/club.svg"
+                  src="/assets/club.png"
                   alt="CSE Technical Club Emblem"
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
                   referrerPolicy="no-referrer"

@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Brand with Official Logos */}
         <div className="flex items-center space-x-2.5 sm:space-x-3">
           <img
-            src="/gpt.svg"
+            src="/assets/gpt.png"
             alt="Government Polytechnic Bantwal Logo"
             className="w-10 h-10 sm:w-11 sm:h-11 object-contain drop-shadow hover:scale-105 transition-transform shrink-0"
             referrerPolicy="no-referrer"
@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
           <img
-            src="/club.svg"
+            src="/assets/club.png"
             alt="Technical Club Logo"
             className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow hover:scale-105 transition-transform shrink-0"
             referrerPolicy="no-referrer"
