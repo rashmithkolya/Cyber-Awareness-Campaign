@@ -1,8 +1,9 @@
 import React, { useRef, useMemo } from 'react';
 import { Language, UserData } from '../types';
 import { TRANSLATIONS } from '../data/translations';
-import { Download, Printer, Award, CheckCircle2, Sparkles, Shield, QrCode, Building2, Terminal } from 'lucide-react';
-import { playClickSound } from '../utils/sound';
+import { Download, Award, CheckCircle2, Sparkles, Shield, QrCode } from 'lucide-react';
+import { playClickSound, playSuccessSound } from '../utils/sound';
+import confetti from 'canvas-confetti';
 
 interface SectionCertificateProps {
   lang: Language;
@@ -37,11 +38,6 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
   });
 
   const participantName = userData.name ? userData.name.trim() : 'Valued Participant';
-
-  const handlePrint = () => {
-    playClickSound();
-    window.print();
-  };
 
   const loadImage = async (src: string): Promise<HTMLImageElement | null> => {
     return new Promise((resolve) => {
@@ -78,12 +74,21 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
   };
 
   const handleDownloadPng = async () => {
-    playClickSound();
+    playSuccessSound();
+
+    // Celebratory download confetti burst
+    confetti({
+      particleCount: 100,
+      spread: 80,
+      origin: { y: 0.6 },
+      colors: ['#10b981', '#34d399', '#f59e0b', '#38bdf8', '#a855f7'],
+      disableForReducedMotion: true,
+    });
 
     try {
-      const [gptImg, clubImg] = await Promise.all([
-        loadImage('/assets/gpt.png'),
-        loadImage('/assets/club.png'),
+      const [logo1Img, logo2Img] = await Promise.all([
+        loadImage('./assets/images/logo-placeholder-1.svg'),
+        loadImage('./assets/images/logo-placeholder-2.svg'),
       ]);
 
       const canvas = document.createElement('canvas');
@@ -158,14 +163,14 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
       ctx.restore();
 
       // 4. Header Section: Logos & Titles
-      // Left Logo: Government Polytechnic Bantwal (gpt.png)
-      if (gptImg) {
-        ctx.drawImage(gptImg, 180, 120, 190, 190);
+      // Left Logo Placeholder
+      if (logo1Img) {
+        ctx.drawImage(logo1Img, 180, 120, 190, 190);
       }
 
-      // Right Logo: CSE Technical Club (club.png)
-      if (clubImg) {
-        ctx.drawImage(clubImg, width - 370, 120, 190, 190);
+      // Right Logo Placeholder
+      if (logo2Img) {
+        ctx.drawImage(logo2Img, width - 370, 120, 190, 190);
       }
 
       // Center Institution Header Text
@@ -360,14 +365,14 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
             <Shield className="w-[450px] h-[450px] text-blue-900 stroke-[1]" />
           </div>
 
-          {/* Top Header Row with Official Logos & Institutions */}
+          {/* Top Header Row with Logos & Institutions */}
           <div className="relative z-10 space-y-3">
             <div className="flex items-center justify-between px-4 sm:px-8">
-              {/* Left Logo: Government Polytechnic Bantwal */}
+              {/* Left Logo Placeholder */}
               <div className="flex items-center space-x-2">
                 <img
-                  src="/assets/gpt.png"
-                  alt="Government Polytechnic Bantwal Emblem"
+                  src="./assets/images/logo-placeholder-1.svg"
+                  alt="Institution Logo Placeholder"
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
                   referrerPolicy="no-referrer"
                 />
@@ -386,11 +391,11 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
                 </p>
               </div>
 
-              {/* Right Logo: CSE Technical Club */}
+              {/* Right Logo Placeholder */}
               <div className="flex items-center space-x-2">
                 <img
-                  src="/assets/club.png"
-                  alt="CSE Technical Club Emblem"
+                  src="./assets/images/logo-placeholder-2.svg"
+                  alt="Technical Club Logo Placeholder"
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
                   referrerPolicy="no-referrer"
                 />
@@ -468,22 +473,14 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
         </div>
       </div>
 
-      {/* Action Download & Print Buttons */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 no-print">
+      {/* Action Download Button */}
+      <div className="flex items-center justify-center pt-2 no-print">
         <button
           onClick={handleDownloadPng}
-          className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all duration-200 transform hover:scale-[1.02] active:scale-95 cursor-pointer flex items-center justify-center space-x-2 shadow-xl"
+          className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 transform hover:scale-[1.02] active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5 shadow-xl"
         >
           <Download className="w-5 h-5" />
           <span>Download Certificate (PNG)</span>
-        </button>
-
-        <button
-          onClick={handlePrint}
-          className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs uppercase tracking-wider transition-all duration-200 transform hover:scale-[1.02] active:scale-95 cursor-pointer flex items-center justify-center space-x-2 shadow-lg"
-        >
-          <Printer className="w-5 h-5" />
-          <span>Print / Save PDF Certificate</span>
         </button>
       </div>
 

@@ -59,17 +59,17 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
 
         {/* Requested Campaign & Developer Credits Footer Card */}
         <div className="max-w-md mx-auto bg-slate-900/90 border border-amber-500/40 rounded-2xl p-6 shadow-2xl space-y-4 animate-highlight-glow backdrop-blur-md">
-          {/* Official Logos Header */}
+          {/* Logos Header */}
           <div className="flex items-center justify-center space-x-4 pb-1">
             <img
-              src="/assets/gpt.png"
-              alt="Government Polytechnic Bantwal Logo"
+              src="./assets/images/logo-placeholder-1.svg"
+              alt="Institution Logo Placeholder"
               className="w-12 h-12 object-contain drop-shadow"
               referrerPolicy="no-referrer"
             />
             <img
-              src="/assets/club.png"
-              alt="Technical Club Logo"
+              src="./assets/images/logo-placeholder-2.svg"
+              alt="Technical Club Logo Placeholder"
               className="w-12 h-12 object-contain drop-shadow"
               referrerPolicy="no-referrer"
             />

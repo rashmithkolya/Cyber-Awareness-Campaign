@@ -62,7 +62,7 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
             {/* Hotspot 1: Sender */}
             <div
               onClick={() => handleSpotClick('h1')}
-              className={`p-2.5 rounded-lg border transition cursor-pointer relative ${selectedSpot === 'h1' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'}`}
+              className={`p-2.5 rounded-lg border transition-all duration-200 transform hover:scale-[1.015] active:scale-[0.99] cursor-pointer relative ${selectedSpot === 'h1' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm hover:shadow-md'}`}
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -76,7 +76,7 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
             {/* Hotspot 2: Urgency Header */}
             <div
               onClick={() => handleSpotClick('h2')}
-              className={`p-3 rounded-lg border transition cursor-pointer relative ${selectedSpot === 'h2' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'}`}
+              className={`p-3 rounded-lg border transition-all duration-200 transform hover:scale-[1.015] active:scale-[0.99] cursor-pointer relative ${selectedSpot === 'h2' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm hover:shadow-md'}`}
             >
               <div className="flex items-center justify-between">
                 <h3 className="text-base font-black text-amber-400 uppercase tracking-tight">
@@ -89,7 +89,7 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
             {/* Hotspot 3: Body & Greeting */}
             <div
               onClick={() => handleSpotClick('h3')}
-              className={`p-3 rounded-lg border transition cursor-pointer relative ${selectedSpot === 'h3' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'}`}
+              className={`p-3 rounded-lg border transition-all duration-200 transform hover:scale-[1.015] active:scale-[0.99] cursor-pointer relative ${selectedSpot === 'h3' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm hover:shadow-md'}`}
             >
               <p className="text-slate-300 leading-relaxed">
                 <span className="font-bold text-amber-300 underline">Dear Student,</span>
@@ -105,7 +105,7 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
             {/* Hotspot 4: Action Button */}
             <div
               onClick={() => handleSpotClick('h4')}
-              className={`p-3 rounded-lg border transition cursor-pointer text-center relative ${selectedSpot === 'h4' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'}`}
+              className={`p-3 rounded-lg border transition-all duration-200 transform hover:scale-[1.015] active:scale-[0.99] cursor-pointer text-center relative ${selectedSpot === 'h4' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm hover:shadow-md'}`}
             >
               <div className="py-2.5 px-4 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs inline-block">
                 CLAIM ₹500 NOW (bit.ly/claim-500)

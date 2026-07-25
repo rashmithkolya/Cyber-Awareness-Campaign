@@ -114,72 +114,57 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
     }, 1800);
   };
 
+  const [activeModal, setActiveModal] = useState<'privacy' | 'terms' | 'help' | 'contact' | null>(null);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveModal(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between relative overflow-hidden font-sans">
       
-      {/* Background Soft Glow Orbs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none animate-pulse" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-cyan-500/12 rounded-full blur-3xl pointer-events-none" />
+      {/* Background Subtle Ambient Gradient */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-indigo-950/20 via-slate-950/40 to-transparent pointer-events-none" />
 
       {/* Main Container */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 sm:py-12 flex-1 flex flex-col justify-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 py-4 sm:py-8 flex-1 flex flex-col justify-center">
         
-        {/* Institutional Branding with Official Logos */}
-        <div className="flex items-center justify-center space-x-4 mb-6 animate-reveal-up">
-          <img
-            src="/assets/gpt.png"
-            alt="Government Polytechnic Bantwal"
-            className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-md hover:scale-105 transition-transform"
-            referrerPolicy="no-referrer"
-          />
-          <div className="flex flex-col items-center space-y-1">
-            <span className="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-widest text-center">
-              Government Polytechnic Bantwal
-            </span>
-            <span className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider text-center">
-              CSE Department • Technical Club
-            </span>
-          </div>
-          <img
-            src="/assets/club.png"
-            alt="Technical Club Logo"
-            className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-md hover:scale-105 transition-transform"
-            referrerPolicy="no-referrer"
-          />
-        </div>
-
         {/* Top Tagline Badge */}
-        <div className="text-center mb-6 animate-reveal-up">
-          <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500/15 via-purple-500/15 to-cyan-500/15 text-amber-300 border border-amber-500/30 uppercase tracking-widest shadow-lg shadow-amber-500/10 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-spin" />
+        <div className="text-center mb-3 animate-reveal-up">
+          <span className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/20 uppercase tracking-widest backdrop-blur-md">
+            <Sparkles className="w-3 h-3 text-amber-400 shrink-0" />
             <span>{t.landingTagline}</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping ml-1" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-1" />
           </span>
         </div>
 
         {/* Hero Banner Title */}
-        <div className="text-center space-y-4 mb-8 animate-reveal-delay-1">
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white drop-shadow-md">
+        <div className="text-center space-y-2 mb-4 sm:mb-5 animate-reveal-delay-1">
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white drop-shadow-sm">
             {t.landingTitle}
           </h1>
-          <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
+          <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto font-normal leading-relaxed">
             {t.landingSub}
           </p>
         </div>
 
-        {/* 3D Perspective Interactive Reward Showcase */}
-        <div className="perspective-1000 mb-8 animate-reveal-delay-2 relative">
+        {/* Compact 3D Perspective Reward Showcase */}
+        <div className="perspective-1000 mb-5 animate-reveal-delay-2 relative">
           
-          {/* Floating Celebratory Badges around card */}
-          <div className="hidden md:flex absolute -top-4 -left-6 z-20 items-center space-x-1.5 px-3 py-1.5 bg-slate-900/90 border border-amber-500/40 rounded-xl text-[11px] font-bold text-amber-300 shadow-xl backdrop-blur-md animate-bounce">
-            <Award className="w-3.5 h-3.5 text-amber-400" />
+          {/* Floating Badges */}
+          <div className="hidden sm:flex absolute -top-3 -left-3 z-20 items-center space-x-1 px-2.5 py-1 bg-slate-900/95 border border-amber-500/30 rounded-lg text-[10px] font-bold text-amber-300 shadow-md backdrop-blur-md">
+            <Award className="w-3 h-3 text-amber-400" />
             <span>Verified Grant</span>
           </div>
 
-          <div className="hidden md:flex absolute -bottom-3 -right-6 z-20 items-center space-x-1.5 px-3 py-1.5 bg-slate-900/90 border border-cyan-500/40 rounded-xl text-[11px] font-bold text-cyan-300 shadow-xl backdrop-blur-md">
-            <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Instant Credit</span>
+          <div className="hidden sm:flex absolute -bottom-2 -right-3 z-20 items-center space-x-1 px-2.5 py-1 bg-slate-900/95 border border-cyan-500/30 rounded-lg text-[10px] font-bold text-cyan-300 shadow-md backdrop-blur-md">
+            <CheckCircle2 className="w-3 h-3 text-cyan-400" />
+            <span>Instant Direct Credit</span>
           </div>
 
           <div
@@ -190,49 +175,50 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
               transform: `rotateX(${cardTilt.rotateX}deg) rotateY(${cardTilt.rotateY}deg) translateZ(0)`,
               transition: 'transform 0.15s cubic-bezier(0.2, 0, 0.2, 1)',
             }}
-            className="gpu-layer bg-gradient-to-r from-purple-900/70 via-slate-900/90 to-indigo-900/70 backdrop-blur-xl border border-purple-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden group cursor-pointer"
+            className="gpu-layer bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 backdrop-blur-xl border border-slate-800 hover:border-amber-500/30 rounded-xl p-4 sm:p-5 shadow-xl relative overflow-hidden group cursor-pointer transition-colors"
           >
-            {/* Holographic Light Sweep */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
+            {/* Holographic Subtle Sweep */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 relative z-10">
               
-              <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 flex items-center justify-center text-slate-950 shadow-xl shadow-amber-500/30 shrink-0 group-hover:scale-105 transition-transform">
-                  <Gift className="w-9 h-9" />
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 flex items-center justify-center text-slate-950 shadow-md shadow-amber-500/20 shrink-0 group-hover:scale-105 transition-transform">
+                  <Gift className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-amber-300 font-semibold flex items-center space-x-1">
-                    <Sparkles className="w-3 h-3 text-amber-300 inline" />
+                  <span className="text-[10px] uppercase tracking-wider text-amber-300 font-semibold flex items-center space-x-1">
+                    <Sparkles className="w-2.5 h-2.5 text-amber-300 inline" />
                     <span>{t.rewardBadge}</span>
                   </span>
-                  <div className="text-4xl font-black text-white tracking-tight">
+                  <div className="text-3xl font-black text-white tracking-tight">
                     {t.rewardAmount}
                   </div>
                 </div>
               </div>
 
-              {/* Animated Live Social Proof Counter */}
-              <div className="flex items-center space-x-2.5 bg-slate-950/80 px-4 py-2.5 rounded-xl border border-slate-800/80 text-xs text-emerald-400 font-mono shadow-inner backdrop-blur-md">
-                <Users className="w-4 h-4 text-emerald-400 animate-pulse" />
-                <span>{claimedCount.toLocaleString()} {t.claimedCount.replace(/[\d,]+/, '')}</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              {/* Authentic Live Social Proof Counter */}
+              <div className="flex items-center space-x-2 bg-slate-950/90 px-3 py-1.5 rounded-lg border border-slate-800 text-xs text-emerald-400 font-mono shadow-inner">
+                <Users className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span className="font-bold">{claimedCount.toLocaleString()}</span>
+                <span className="text-[11px] text-slate-300 font-sans">{t.claimedCount.replace(/[\d,]+/, '').trim()}</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
               </div>
 
             </div>
 
             {/* Quick Perks Bar */}
-            <div className="mt-6 pt-6 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-300 relative z-10">
-              <div className="flex items-center space-x-2">
-                <Zap className="w-4 h-4 text-amber-400 shrink-0" />
+            <div className="mt-3 pt-3 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-slate-300 relative z-10">
+              <div className="flex items-center space-x-1.5">
+                <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                 <span>{t.quickVerify}</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+              <div className="flex items-center space-x-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span>{t.studentOnly}</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Lock className="w-4 h-4 text-cyan-400 shrink-0" />
+              <div className="flex items-center space-x-1.5">
+                <Lock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                 <span>{t.instantCredit}</span>
               </div>
             </div>
@@ -240,10 +226,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
         </div>
 
         {/* Verification Form Container */}
-        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
+        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-xl p-5 sm:p-6 shadow-xl relative">
           
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-white mb-1">
+          <div className="mb-4">
+            <h2 className="text-lg font-bold text-white mb-0.5">
               {t.formTitle}
             </h2>
             <p className="text-xs text-slate-400">
@@ -252,15 +238,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
           </div>
 
           {errorMsg && (
-            <div className="mb-4 p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl flex items-center space-x-2 text-rose-400 text-xs">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div className="mb-3 p-2.5 bg-rose-500/10 border border-rose-500/30 rounded-lg flex items-center space-x-2 text-rose-400 text-xs">
+              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
               <span>{errorMsg}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label htmlFor="student-name" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+              <label htmlFor="student-name" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
                 {t.nameLabel}
               </label>
               <input
@@ -270,13 +256,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder={t.namePlaceholder}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition text-sm"
+                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition text-sm"
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label htmlFor="student-phone" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="student-phone" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
                   {t.phoneLabel}
                 </label>
                 <input
@@ -286,12 +272,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
                   placeholder={t.phonePlaceholder}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition text-sm"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition text-sm"
                 />
               </div>
 
               <div>
-                <label htmlFor="student-email" className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="student-email" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
                   {t.emailLabel}
                 </label>
                 <input
@@ -301,12 +287,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder={t.emailPlaceholder}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition text-sm"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition text-sm"
                 />
               </div>
             </div>
 
-            {/* Magnetic CTA Submit Button with Ripple Effect */}
+            {/* Magnetic CTA Submit Button */}
             <button
               ref={btnRef}
               type="submit"
@@ -318,7 +304,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
                 transform: `translate3d(${btnOffset.x}px, ${btnOffset.y}px, 0)`,
                 transition: btnOffset.x === 0 && btnOffset.y === 0 ? 'transform 0.3s ease-out' : 'none',
               }}
-              className="gpu-layer w-full mt-2 py-4 px-6 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-sm uppercase tracking-wider shadow-xl hover:brightness-110 active:scale-[0.99] transition cursor-pointer flex items-center justify-center space-x-2 disabled:opacity-75 relative overflow-hidden group"
+              className="gpu-layer w-full mt-1 py-3.5 px-5 rounded-lg bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:brightness-105 active:scale-[0.99] transition cursor-pointer flex items-center justify-center space-x-2 disabled:opacity-75 relative overflow-hidden group"
             >
               {/* Shimmer overlay */}
               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
@@ -337,7 +323,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
 
               {isLoading ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
                   <span>Verifying Student Portal...</span>
                 </>
               ) : (
@@ -350,7 +336,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
           </form>
 
           {/* Privacy Safeguard Note */}
-          <div className="mt-6 pt-4 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-2">
+          <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-1.5">
             <span className="text-amber-400/90 font-medium">{t.privacyNotice}</span>
             <span>{t.termsNotice}</span>
           </div>
@@ -359,10 +345,117 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
 
       </div>
 
-      {/* Footer Branding */}
-      <div className="relative z-10 py-4 text-center text-xs text-slate-600 border-t border-slate-900">
-        Government Polytechnic Bantwal • Student Technical Club Demonstration
-      </div>
+      {/* Professional Institutional Footer */}
+      <footer className="relative z-10 py-5 bg-slate-950/90 border-t border-slate-900 text-xs text-slate-400 px-4">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+          
+          <div className="space-y-0.5">
+            <p className="font-semibold text-slate-300">Government Polytechnic Bantwal</p>
+            <p className="text-[11px] text-slate-400">Student Welfare & Technical Grant Portal © 2026</p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] font-medium text-slate-400">
+            <button
+              onClick={() => setActiveModal('privacy')}
+              className="hover:text-amber-400 transition cursor-pointer underline underline-offset-2"
+            >
+              Privacy Policy
+            </button>
+            <span className="text-slate-700">•</span>
+            <button
+              onClick={() => setActiveModal('terms')}
+              className="hover:text-amber-400 transition cursor-pointer underline underline-offset-2"
+            >
+              Terms of Use
+            </button>
+            <span className="text-slate-700">•</span>
+            <button
+              onClick={() => setActiveModal('help')}
+              className="hover:text-amber-400 transition cursor-pointer underline underline-offset-2"
+            >
+              Help Centre
+            </button>
+            <span className="text-slate-700">•</span>
+            <button
+              onClick={() => setActiveModal('contact')}
+              className="hover:text-amber-400 transition cursor-pointer underline underline-offset-2"
+            >
+              Contact Student Affairs
+            </button>
+          </div>
+
+        </div>
+      </footer>
+
+      {/* Institutional Policy Modal */}
+      {activeModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative space-y-4">
+            
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                <ShieldCheck className="w-4 h-4 text-amber-400" />
+                <span>
+                  {activeModal === 'privacy' && 'Student Data Privacy Policy'}
+                  {activeModal === 'terms' && 'Grant Portal Terms & Conditions'}
+                  {activeModal === 'help' && 'Student Welfare Help Centre'}
+                  {activeModal === 'contact' && 'Contact Student Affairs'}
+                </span>
+              </h3>
+              <button
+                onClick={() => setActiveModal(null)}
+                className="text-slate-400 hover:text-white text-xs px-2 py-1 bg-slate-800 rounded-lg transition cursor-pointer"
+              >
+                Close ✕
+              </button>
+            </div>
+
+            <div className="text-xs text-slate-300 leading-relaxed space-y-2">
+              {activeModal === 'privacy' && (
+                <>
+                  <p>All student information entered into this portal is verified strictly for educational grant eligibility. Your data is handled under SSL encryption and processed in compliance with institutional welfare standards.</p>
+                  <p className="text-slate-400">Information is never shared with third-party advertising networks.</p>
+                </>
+              )}
+              {activeModal === 'terms' && (
+                <>
+                  <p>1. Grants are reserved exclusively for currently enrolled students of Government Polytechnic Bantwal.</p>
+                  <p>2. Each student is eligible for one single claim per roll number/phone verification.</p>
+                  <p>3. Misrepresentation or false credentials will result in grant forfeiture.</p>
+                </>
+              )}
+              {activeModal === 'help' && (
+                <>
+                  <p>For assistance with grant claims or verification issues, please visit:</p>
+                  <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1 font-mono text-[11px] text-amber-300">
+                    <p>📍 Student Welfare Office: Block B, Room 102</p>
+                    <p>🕒 Hours: Monday - Friday, 9:30 AM - 4:30 PM</p>
+                  </div>
+                </>
+              )}
+              {activeModal === 'contact' && (
+                <>
+                  <p>Contact the Student Affairs & Technical Club Committee:</p>
+                  <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1 font-mono text-[11px] text-cyan-300">
+                    <p>📧 Email: studentaffairs@gptbantwal.ac.in</p>
+                    <p>📞 Phone: +91 (08255) 233-456 (Ext. 104)</p>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                onClick={() => setActiveModal(null)}
+                className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg transition cursor-pointer"
+              >
+                Acknowledge & Close
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

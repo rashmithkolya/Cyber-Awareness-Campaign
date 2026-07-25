@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer Ring with Tech Gear accents -->
+  <circle cx="100" cy="100" r="80" fill="url(#grad2)" stroke="url(#cyan)" stroke-width="6"/>
+  <circle cx="100" cy="100" r="65" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="6,4"/>
+  <!-- Tech Emblem/Node Lines -->
+  <circle cx="100" cy="82" r="16" fill="url(#cyan)"/>
+  <path d="M 100 98 L 100 120 M 80 115 L 120 115" stroke="url(#cyan)" stroke-width="4" stroke-linecap="round"/>
+  <!-- Text -->
+  <text x="100" y="145" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1">LOGO 2</text>
+</svg>

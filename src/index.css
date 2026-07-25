@@ -277,6 +277,52 @@
   animation: stampIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
+/* Quiz Question Slide & Fade Keyframes */
+@keyframes quizFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes questionSlideNextOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.98);
+  }
+}
+
+@keyframes questionSlideNextIn {
+  0% {
+    opacity: 0;
+    transform: translateX(20px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: quizFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-question-exit {
+  animation: questionSlideNextOut 0.22s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.animate-question-enter {
+  animation: questionSlideNextIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Reduced Motion Override Rules for Accessibility & Battery Efficiency */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

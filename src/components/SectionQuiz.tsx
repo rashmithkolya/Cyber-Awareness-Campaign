@@ -17,11 +17,12 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showExplanation, setShowExplanation] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [transitionState, setTransitionState] = useState<'idle' | 'exit' | 'enter'>('idle');
 
   const currentQ = QUIZ_QUESTIONS[currentIdx];
 
   const handleOptionSelect = (optionIdx: number) => {
-    if (showExplanation) return;
+    if (showExplanation || transitionState !== 'idle') return;
     playClickSound();
 
     const newAnswers = [...selectedAnswers, optionIdx];
@@ -37,36 +38,122 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
   };
 
   const handleNext = () => {
+    if (transitionState !== 'idle') return;
     playClickSound();
-    setShowExplanation(false);
 
-    if (currentIdx + 1 < QUIZ_QUESTIONS.length) {
-      setCurrentIdx(prev => prev + 1);
-    } else {
-      setIsFinished(true);
-      // Calculate total score
-      const totalScore = selectedAnswers.reduce((score, ansIdx, qIdx) => {
-        return ansIdx === QUIZ_QUESTIONS[qIdx].correctIndex ? score + 1 : score;
-      }, 0);
+    // Trigger smooth exit transition
+    setTransitionState('exit');
 
-      // Passing score is 4 out of 5 (80%)
-      if (totalScore >= 4) {
-        onQuizPassed();
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+    setTimeout(() => {
+      setShowExplanation(false);
+
+      if (currentIdx + 1 < QUIZ_QUESTIONS.length) {
+        setCurrentIdx(prev => prev + 1);
+      } else {
+        setIsFinished(true);
+        // Calculate total score
+        const totalScore = selectedAnswers.reduce((score, ansIdx, qIdx) => {
+          return ansIdx === QUIZ_QUESTIONS[qIdx].correctIndex ? score + 1 : score;
+        }, 0);
+
+        // Passing score is 4 out of 5 (80%)
+        if (totalScore >= 4) {
+          onQuizPassed();
+
+          // Multi-stage performant canvas confetti celebratory burst
+          const count = 180;
+          const defaults = {
+            origin: { y: 0.65 },
+            disableForReducedMotion: true,
+          };
+
+          const fire = (particleRatio: number, opts: confetti.Options) => {
+            confetti({
+              ...defaults,
+              ...opts,
+              particleCount: Math.floor(count * particleRatio),
+            });
+          };
+
+          // Main center explosion
+          fire(0.25, {
+            spread: 30,
+            startVelocity: 55,
+            colors: ['#f59e0b', '#10b981', '#06b6d4', '#8b5cf6'],
+          });
+          fire(0.2, {
+            spread: 60,
+            colors: ['#3b82f6', '#ec4899', '#f59e0b'],
+          });
+          fire(0.35, {
+            spread: 100,
+            decay: 0.91,
+            scalar: 0.8,
+            colors: ['#10b981', '#38bdf8', '#a855f7'],
+          });
+          fire(0.1, {
+            spread: 120,
+            startVelocity: 25,
+            decay: 0.92,
+            scalar: 1.2,
+          });
+          fire(0.1, {
+            spread: 120,
+            startVelocity: 45,
+          });
+
+          // Staggered side cannon bursts
+          setTimeout(() => {
+            confetti({
+              particleCount: 45,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0.05, y: 0.7 },
+              colors: ['#f59e0b', '#10b981', '#38bdf8'],
+              disableForReducedMotion: true,
+            });
+          }, 250);
+
+          setTimeout(() => {
+            confetti({
+              particleCount: 45,
+              angle: 120,
+              spread: 55,
+              origin: { x: 0.95, y: 0.7 },
+              colors: ['#ec4899', '#8b5cf6', '#10b981'],
+              disableForReducedMotion: true,
+            });
+          }, 500);
+        }
       }
-    }
+
+      // Trigger enter transition for new question or final score card
+      setTransitionState('enter');
+
+      setTimeout(() => {
+        setTransitionState('idle');
+      }, 350);
+    }, 220);
   };
 
   const handleRetry = () => {
+    if (transitionState !== 'idle') return;
     playClickSound();
-    setCurrentIdx(0);
-    setSelectedAnswers([]);
-    setShowExplanation(false);
-    setIsFinished(false);
+
+    setTransitionState('exit');
+
+    setTimeout(() => {
+      setCurrentIdx(0);
+      setSelectedAnswers([]);
+      setShowExplanation(false);
+      setIsFinished(false);
+
+      setTransitionState('enter');
+
+      setTimeout(() => {
+        setTransitionState('idle');
+      }, 350);
+    }, 220);
   };
 
   const calculateScore = () => {
@@ -77,6 +164,12 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
 
   const score = calculateScore();
   const passed = score >= 4;
+
+  const getTransitionClass = () => {
+    if (transitionState === 'exit') return 'animate-question-exit gpu-layer';
+    if (transitionState === 'enter') return 'animate-question-enter gpu-layer';
+    return 'gpu-layer';
+  };
 
   return (
     <section className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
@@ -91,7 +184,7 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
       </div>
 
       {!isFinished ? (
-        <div className="bg-slate-950 p-6 rounded-xl border border-slate-800 space-y-6">
+        <div className={`bg-slate-950 p-6 rounded-xl border border-slate-800 space-y-6 ${getTransitionClass()}`}>
           
           {/* Progress Indicator */}
           <div className="flex items-center justify-between text-xs font-mono text-slate-400">
@@ -128,7 +221,7 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
               return (
                 <button
                   key={oIdx}
-                  disabled={showExplanation}
+                  disabled={showExplanation || transitionState !== 'idle'}
                   onClick={() => handleOptionSelect(oIdx)}
                   className={`w-full text-left p-4 rounded-xl border font-medium text-xs sm:text-sm transition cursor-pointer flex items-center justify-between ${btnStyle}`}
                 >
@@ -150,8 +243,9 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
                 {lang === 'en' ? currentQ.explanationEn : currentQ.explanationKn}
               </p>
               <button
+                disabled={transitionState !== 'idle'}
                 onClick={handleNext}
-                className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition cursor-pointer"
+                className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition cursor-pointer"
               >
                 {currentIdx + 1 < QUIZ_QUESTIONS.length ? 'Next Question →' : 'View Final Score'}
               </button>
@@ -161,7 +255,7 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
         </div>
       ) : (
         /* Final Score Card */
-        <div className="bg-slate-950 p-8 rounded-xl border border-slate-800 text-center space-y-6 animate-fade-in">
+        <div className={`bg-slate-950 p-8 rounded-xl border border-slate-800 text-center space-y-6 ${getTransitionClass()}`}>
           <div className="w-20 h-20 mx-auto rounded-full bg-slate-900 border-2 border-amber-400 flex items-center justify-center text-amber-400 shadow-xl">
             <Award className="w-10 h-10" />
           </div>
@@ -177,6 +271,7 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
+              disabled={transitionState !== 'idle'}
               onClick={handleRetry}
               className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold transition cursor-pointer flex items-center justify-center space-x-2"
             >
@@ -187,6 +282,16 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
             {passed && (
               <a
                 href="#certificate-section"
+                onClick={() => {
+                  playSuccessSound();
+                  confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#10b981', '#34d399', '#f59e0b', '#38bdf8'],
+                    disableForReducedMotion: true,
+                  });
+                }}
                 className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black uppercase tracking-wider transition cursor-pointer flex items-center justify-center space-x-2 shadow-lg"
               >
                 <span>{t.unlockCertBtn}</span>

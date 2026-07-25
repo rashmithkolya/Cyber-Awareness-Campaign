@@ -29,7 +29,7 @@ export const TRANSLATIONS = {
     emailLabel: "Email Address",
     emailPlaceholder: "e.g. student@gptbantwal.ac.in",
     claimBtn: "CLAIM ₹500 INSTANTLY",
-    privacyNotice: "🔒 Demonstration Only — Your data never leaves your device.",
+    privacyNotice: "🔒 256-Bit SSL Encrypted — Verified Student Data Portal",
     termsNotice: "* Limited allocation remaining. Verified by Student Affairs Department.",
 
     // Cinematic Reveal
@@ -200,7 +200,7 @@ export const TRANSLATIONS = {
     emailLabel: "ಇಮೇಲ್ ವಿಳಾಸ (Email Address)",
     emailPlaceholder: "ಉದಾ. student@gptbantwal.ac.in",
     claimBtn: "₹500 ತಕ್ಷಣವೇ ಪಡೆದುಕೊಳ್ಳಿ",
-    privacyNotice: "🔒 Demonstration ಮಾತ್ರ — ನಿಮ್ಮ Data ನಿಮ್ಮ Browser ನಲ್ಲೇ ಇರುತ್ತದೆ.",
+    privacyNotice: "🔒 256-Bit SSL ಸುರಕ್ಷಿತ ಪರಿಶೀಲನೆ — ಅಧಿಕೃತ ವಿದ್ಯಾರ್ಥಿ ಪೋರ್ಟಲ್",
     termsNotice: "* ಸೀಮಿತ ಲಭ್ಯತೆ. Student Affairs ವಿಭಾಗದಿಂದ ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
 
     // Cinematic Reveal

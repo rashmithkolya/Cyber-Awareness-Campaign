@@ -10,7 +10,6 @@ import { InteractiveChallenges } from './components/InteractiveChallenges';
 import { SectionQuiz } from './components/SectionQuiz';
 import { SectionCertificate } from './components/SectionCertificate';
 import { FooterAndFeedback } from './components/FooterAndFeedback';
-import { AwarenessPopup } from './components/AwarenessPopup';
 import { CyberBackgroundAnimation } from './components/CyberBackgroundAnimation';
 import { getAudioMute, toggleAudioMute } from './utils/sound';
 
@@ -21,17 +20,6 @@ export default function App() {
   const [quizPassed, setQuizPassed] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMuted, setIsMuted] = useState(getAudioMute());
-  const [showPopup, setShowPopup] = useState(false);
-
-  // Trigger popup on entering awareness stage
-  useEffect(() => {
-    if (appStage === 'awareness') {
-      const timer = setTimeout(() => {
-        setShowPopup(true);
-      }, 600);
-      return () => clearTimeout(timer);
-    }
-  }, [appStage]);
 
   // Track scroll progress for reading bar
   useEffect(() => {
@@ -115,17 +103,10 @@ export default function App() {
       {/* Stage 3: Cyber Awareness Campaign Modules */}
       {appStage === 'awareness' && (
         <main className="space-y-12">
-          {/* Certificate Awareness Popup Modal */}
-          <AwarenessPopup
-            lang={lang}
-            isOpen={showPopup}
-            onClose={() => setShowPopup(false)}
-            onStartLearning={scrollToLearning}
-          />
-          
           {/* Awareness Hero */}
           <AwarenessHero
             lang={lang}
+            userData={userData}
             onStartLearning={scrollToLearning}
             onJumpToCert={scrollToCert}
           />
