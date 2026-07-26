@@ -91,7 +91,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
     e.preventDefault();
     if (!name.trim()) {
       playAlertSound();
-      setErrorMsg('Please enter your student name.');
+      setErrorMsg('Please enter your full name.');
       return;
     }
     if (!phone.trim() || phone.length < 8) {
@@ -246,11 +246,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label htmlFor="student-name" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
+              <label htmlFor="user-name" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
                 {t.nameLabel}
               </label>
               <input
-                id="student-name"
+                id="user-name"
                 type="text"
                 required
                 value={name}
@@ -262,11 +262,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label htmlFor="student-phone" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
+                <label htmlFor="user-phone" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
                   {t.phoneLabel}
                 </label>
                 <input
-                  id="student-phone"
+                  id="user-phone"
                   type="tel"
                   required
                   value={phone}
@@ -277,11 +277,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
               </div>
 
               <div>
-                <label htmlFor="student-email" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
+                <label htmlFor="user-email" className="block text-[11px] font-semibold text-slate-300 mb-1 uppercase tracking-wider">
                   {t.emailLabel}
                 </label>
                 <input
-                  id="student-email"
+                  id="user-email"
                   type="email"
                   required
                   value={email}
@@ -304,7 +304,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
                 transform: `translate3d(${btnOffset.x}px, ${btnOffset.y}px, 0)`,
                 transition: btnOffset.x === 0 && btnOffset.y === 0 ? 'transform 0.3s ease-out' : 'none',
               }}
-              className="gpu-layer w-full mt-1 py-3.5 px-5 rounded-lg bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:brightness-105 active:scale-[0.99] transition cursor-pointer flex items-center justify-center space-x-2 disabled:opacity-75 relative overflow-hidden group"
+              className="gpu-layer w-full mt-1 py-3.5 px-5 rounded-lg bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:brightness-105 active:brightness-90 active:from-amber-600 active:to-yellow-500 active:scale-95 transition-all duration-150 cursor-pointer flex items-center justify-center space-x-2 disabled:opacity-75 relative overflow-hidden group"
             >
               {/* Shimmer overlay */}
               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
@@ -324,7 +324,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
               {isLoading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
-                  <span>Verifying Student Portal...</span>
+                  <span>Verifying Details...</span>
                 </>
               ) : (
                 <>
@@ -351,7 +351,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
           
           <div className="space-y-0.5">
             <p className="font-semibold text-slate-300">Government Polytechnic Bantwal</p>
-            <p className="text-[11px] text-slate-400">Student Welfare & Technical Grant Portal © 2026</p>
+            <p className="text-[11px] text-slate-400">Public Digital Benefit Portal © 2026</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] font-medium text-slate-400">
@@ -380,7 +380,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
               onClick={() => setActiveModal('contact')}
               className="hover:text-amber-400 transition cursor-pointer underline underline-offset-2"
             >
-              Contact Student Affairs
+              Contact Support
             </button>
           </div>
 
@@ -396,10 +396,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
               <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
                 <ShieldCheck className="w-4 h-4 text-amber-400" />
                 <span>
-                  {activeModal === 'privacy' && 'Student Data Privacy Policy'}
-                  {activeModal === 'terms' && 'Grant Portal Terms & Conditions'}
-                  {activeModal === 'help' && 'Student Welfare Help Centre'}
-                  {activeModal === 'contact' && 'Contact Student Affairs'}
+                  {activeModal === 'privacy' && 'User Data Privacy Policy'}
+                  {activeModal === 'terms' && 'Digital Benefit Terms & Conditions'}
+                  {activeModal === 'help' && 'Public Support & Help Centre'}
+                  {activeModal === 'contact' && 'Contact Support Desk'}
                 </span>
               </h3>
               <button
@@ -413,31 +413,31 @@ export const LandingPage: React.FC<LandingPageProps> = ({ lang, onSubmit }) => {
             <div className="text-xs text-slate-300 leading-relaxed space-y-2">
               {activeModal === 'privacy' && (
                 <>
-                  <p>All student information entered into this portal is verified strictly for educational grant eligibility. Your data is handled under SSL encryption and processed in compliance with institutional welfare standards.</p>
+                  <p>All information entered into this portal is verified strictly for benefit eligibility. Your data is handled under SSL encryption and processed in compliance with digital distribution standards.</p>
                   <p className="text-slate-400">Information is never shared with third-party advertising networks.</p>
                 </>
               )}
               {activeModal === 'terms' && (
                 <>
-                  <p>1. Grants are reserved exclusively for currently enrolled students of Government Polytechnic Bantwal.</p>
-                  <p>2. Each student is eligible for one single claim per roll number/phone verification.</p>
-                  <p>3. Misrepresentation or false credentials will result in grant forfeiture.</p>
+                  <p>1. Digital benefits are allocated for verified participants of the promotional campaign.</p>
+                  <p>2. Each participant is eligible for one single claim per phone number verification.</p>
+                  <p>3. Misrepresentation or false credentials will result in benefit forfeiture.</p>
                 </>
               )}
               {activeModal === 'help' && (
                 <>
-                  <p>For assistance with grant claims or verification issues, please visit:</p>
+                  <p>For assistance with reward claims or verification issues, please visit:</p>
                   <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1 font-mono text-[11px] text-amber-300">
-                    <p>📍 Student Welfare Office: Block B, Room 102</p>
+                    <p>📍 Community Support Desk: Block B, Room 102</p>
                     <p>🕒 Hours: Monday - Friday, 9:30 AM - 4:30 PM</p>
                   </div>
                 </>
               )}
               {activeModal === 'contact' && (
                 <>
-                  <p>Contact the Student Affairs & Technical Club Committee:</p>
+                  <p>Contact the Campaign Operations Committee:</p>
                   <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1 font-mono text-[11px] text-cyan-300">
-                    <p>📧 Email: studentaffairs@gptbantwal.ac.in</p>
+                    <p>📧 Email: support@gptbantwal.ac.in</p>
                     <p>📞 Phone: +91 (08255) 233-456 (Ext. 104)</p>
                   </div>
                 </>

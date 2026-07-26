@@ -58,7 +58,7 @@ export const AwarenessHero: React.FC<AwarenessHeroProps> = ({
               </div>
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                  Welcome, <span className="text-amber-400">{userData?.name || 'Student'}</span>!
+                  Welcome, <span className="text-amber-400">{userData?.name || 'Visitor'}</span>!
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-300 font-medium">
                   Government Polytechnic Bantwal & CSE Technical Club Initiative
@@ -66,14 +66,14 @@ export const AwarenessHero: React.FC<AwarenessHeroProps> = ({
               </div>
             </div>
             <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 shrink-0 self-start sm:self-center">
-              Student Safety First
+              Digital Safety First
             </span>
           </div>
 
           {/* Short Initiative Explanation */}
           <div className="space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
             <p>
-              <strong>About this Initiative:</strong> What started as a simulated ₹500 reward offer was a hands-on cybersecurity exercise to demonstrate how phishing lures trick students.
+              <strong>About this Initiative:</strong> What started as a simulated ₹500 reward offer was a hands-on cybersecurity exercise to demonstrate how phishing lures trick everyday citizens and users.
             </p>
             <p className="text-emerald-300 font-medium flex items-center space-x-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 inline" />
@@ -138,25 +138,38 @@ export const AwarenessHero: React.FC<AwarenessHeroProps> = ({
                 playClickSound();
                 onJumpToCert();
               }}
-              className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center space-x-1 transition cursor-pointer"
+              className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 active:bg-emerald-500/35 border border-emerald-500/40 text-emerald-300 hover:text-emerald-200 active:text-emerald-100 text-xs font-extrabold transition-all duration-150 cursor-pointer active:scale-95 shadow-sm group"
             >
+              <Award className="w-3.5 h-3.5 text-amber-400 group-hover:rotate-12 transition-transform shrink-0" />
               <span>Jump to Certificate</span>
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             </button>
           </div>
         </div>
 
-        {/* Action Button */}
-        <div className="flex justify-center pt-2 animate-reveal-delay-2">
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2 animate-reveal-delay-2">
           <button
             onClick={() => {
               playClickSound();
               onStartLearning();
             }}
-            className="px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-sm uppercase tracking-widest shadow-2xl hover:brightness-110 active:scale-[0.99] transition cursor-pointer flex items-center justify-center space-x-2"
+            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-sm uppercase tracking-widest shadow-2xl hover:brightness-110 active:brightness-90 active:from-amber-600 active:to-yellow-500 active:scale-95 transition-all duration-150 cursor-pointer flex items-center justify-center space-x-2"
           >
             <span>{t.startLearning}</span>
             <ArrowDown className="w-4 h-4 animate-bounce" />
+          </button>
+
+          <button
+            onClick={() => {
+              playClickSound();
+              onJumpToCert();
+            }}
+            className="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 active:bg-emerald-950/90 text-emerald-300 hover:text-emerald-200 active:text-emerald-100 border-2 border-emerald-500/40 hover:border-emerald-400 active:border-emerald-300 font-extrabold text-sm tracking-wide shadow-xl hover:shadow-emerald-500/10 active:scale-95 transition-all duration-150 cursor-pointer flex items-center justify-center space-x-2.5 group"
+          >
+            <Award className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
+            <span>Jump to Certificate</span>
+            <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
           </button>
         </div>
 

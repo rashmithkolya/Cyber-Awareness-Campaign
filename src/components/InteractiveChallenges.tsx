@@ -91,10 +91,10 @@ export const InteractiveChallenges: React.FC<InteractiveChallengesProps> = ({ la
                           setScenarioAnswers(prev => ({ ...prev, [sc.id]: cIdx }));
                           if (choice.isSafe) playSuccessSound(); else playAlertSound();
                         }}
-                        className={`w-full text-left p-4 rounded-xl border transition text-xs sm:text-sm font-medium flex items-center justify-between cursor-pointer ${isSelected ? (choice.isSafe ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300' : 'bg-rose-500/20 border-rose-400 text-rose-300') : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800'}`}
+                        className={`w-full text-left p-4 rounded-xl border transition-all duration-150 text-xs sm:text-sm font-medium flex items-center justify-between cursor-pointer active:scale-95 active:brightness-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${isSelected ? (choice.isSafe ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300 ring-1 ring-emerald-400/30' : 'bg-rose-500/20 border-rose-400 text-rose-300 ring-1 ring-rose-400/30') : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800/90'}`}
                       >
                         <span>{lang === 'en' ? choice.textEn : choice.textKn}</span>
-                        <ArrowRight className="w-4 h-4 shrink-0 ml-2" />
+                        <ArrowRight className="w-4 h-4 shrink-0 ml-2 text-slate-400" />
                       </button>
                     );
                   })}
@@ -148,14 +148,16 @@ export const InteractiveChallenges: React.FC<InteractiveChallengesProps> = ({ la
 
                   <div className="flex items-center space-x-2 shrink-0">
                     <button
+                      type="button"
                       onClick={() => handleUrlCheck(item.id, true, item.isSafe)}
-                      className="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-300 text-xs font-bold cursor-pointer transition"
+                      className="px-3.5 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 active:bg-emerald-500/40 border border-emerald-500/30 active:border-emerald-400 text-emerald-300 active:text-emerald-100 text-xs font-bold cursor-pointer transition-all duration-150 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                     >
                       Legitimate Safe
                     </button>
                     <button
+                      type="button"
                       onClick={() => handleUrlCheck(item.id, false, item.isSafe)}
-                      className="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 text-rose-300 text-xs font-bold cursor-pointer transition"
+                      className="px-3.5 py-2 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 active:bg-rose-500/40 border border-rose-500/30 active:border-rose-400 text-rose-300 active:text-rose-100 text-xs font-bold cursor-pointer transition-all duration-150 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                     >
                       Phishing Scam
                     </button>
@@ -192,15 +194,17 @@ export const InteractiveChallenges: React.FC<InteractiveChallengesProps> = ({ la
 
                   <div className="flex items-center space-x-2 pt-2 border-t border-slate-800">
                     <button
+                      type="button"
                       onClick={() => handleSortCheck(item.id, true, item.isSafe)}
-                      className="flex-1 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition cursor-pointer flex items-center justify-center space-x-1"
+                      className="flex-1 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 active:bg-emerald-500/40 border border-emerald-500/30 active:border-emerald-400 text-emerald-300 active:text-emerald-100 text-xs font-bold transition-all duration-150 cursor-pointer flex items-center justify-center space-x-1 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>SAFE</span>
                     </button>
                     <button
+                      type="button"
                       onClick={() => handleSortCheck(item.id, false, item.isSafe)}
-                      className="flex-1 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 text-rose-300 text-xs font-bold transition cursor-pointer flex items-center justify-center space-x-1"
+                      className="flex-1 py-2 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 active:bg-rose-500/40 border border-rose-500/30 active:border-rose-400 text-rose-300 active:text-rose-100 text-xs font-bold transition-all duration-150 cursor-pointer flex items-center justify-center space-x-1 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                     >
                       <XCircle className="w-3.5 h-3.5" />
                       <span>DANGEROUS</span>

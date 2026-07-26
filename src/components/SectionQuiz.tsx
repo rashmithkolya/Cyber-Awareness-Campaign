@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Language } from '../types';
 import { TRANSLATIONS, QUIZ_QUESTIONS } from '../data/translations';
-import { HelpCircle, CheckCircle2, XCircle, RotateCcw, Award } from 'lucide-react';
+import { HelpCircle, CheckCircle2, XCircle, RotateCcw, Award, Sparkles } from 'lucide-react';
 import { playSuccessSound, playAlertSound, playClickSound } from '../utils/sound';
 import confetti from 'canvas-confetti';
 
@@ -221,9 +221,10 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
               return (
                 <button
                   key={oIdx}
+                  type="button"
                   disabled={showExplanation || transitionState !== 'idle'}
                   onClick={() => handleOptionSelect(oIdx)}
-                  className={`w-full text-left p-4 rounded-xl border font-medium text-xs sm:text-sm transition cursor-pointer flex items-center justify-between ${btnStyle}`}
+                  className={`w-full text-left p-4 rounded-xl border font-medium text-xs sm:text-sm transition-all duration-150 cursor-pointer flex items-center justify-between active:scale-95 active:brightness-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${btnStyle}`}
                 >
                   <span>{opt}</span>
                   {hasSelected && (
@@ -243,9 +244,10 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
                 {lang === 'en' ? currentQ.explanationEn : currentQ.explanationKn}
               </p>
               <button
+                type="button"
                 disabled={transitionState !== 'idle'}
                 onClick={handleNext}
-                className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition cursor-pointer"
+                className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:brightness-90 disabled:opacity-50 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-150 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               >
                 {currentIdx + 1 < QUIZ_QUESTIONS.length ? 'Next Question →' : 'View Final Score'}
               </button>
@@ -273,7 +275,7 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
             <button
               disabled={transitionState !== 'idle'}
               onClick={handleRetry}
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold transition cursor-pointer flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 active:bg-slate-700/90 active:border-slate-500 text-slate-200 border border-slate-700 text-xs font-bold transition-all duration-150 active:scale-95 cursor-pointer flex items-center justify-center space-x-2"
             >
               <RotateCcw className="w-4 h-4" />
               <span>{t.retryBtn}</span>
@@ -285,16 +287,18 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
                 onClick={() => {
                   playSuccessSound();
                   confetti({
-                    particleCount: 80,
-                    spread: 70,
+                    particleCount: 100,
+                    spread: 80,
                     origin: { y: 0.6 },
-                    colors: ['#10b981', '#34d399', '#f59e0b', '#38bdf8'],
+                    colors: ['#10b981', '#34d399', '#f59e0b', '#38bdf8', '#fbbf24'],
                     disableForReducedMotion: true,
                   });
                 }}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black uppercase tracking-wider transition cursor-pointer flex items-center justify-center space-x-2 shadow-lg"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300 hover:brightness-110 active:brightness-90 active:from-emerald-500 active:to-amber-400 text-slate-950 text-xs font-black uppercase tracking-wider transition-all duration-150 cursor-pointer flex items-center justify-center space-x-2.5 shadow-xl shadow-emerald-500/20 active:scale-95 group"
               >
+                <Award className="w-4 h-4 text-slate-950 group-hover:scale-110 transition-transform shrink-0" />
                 <span>{t.unlockCertBtn}</span>
+                <Sparkles className="w-4 h-4 text-slate-950 shrink-0" />
               </a>
             )}
           </div>

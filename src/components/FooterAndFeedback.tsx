@@ -36,9 +36,9 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
             width="100%"
             height="520"
             className="w-full h-[520px] border-0"
-            title="Student Cyber Awareness Feedback Form"
+            title="Cyber Security Awareness Feedback Form"
           >
-            Loading Student Feedback Form...
+            Loading Feedback Form...
           </iframe>
         </div>
 
@@ -62,13 +62,13 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
           {/* Logos Header */}
           <div className="flex items-center justify-center space-x-4 pb-1">
             <img
-              src="./assets/images/logo-placeholder-1.svg"
+              src="./assets/images/logo-placeholder-1.png"
               alt="Institution Logo Placeholder"
               className="w-12 h-12 object-contain drop-shadow"
               referrerPolicy="no-referrer"
             />
             <img
-              src="./assets/images/logo-placeholder-2.svg"
+              src="./assets/images/logo-placeholder-2.png"
               alt="Technical Club Logo Placeholder"
               className="w-12 h-12 object-contain drop-shadow"
               referrerPolicy="no-referrer"
@@ -125,7 +125,7 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
               href="https://www.instagram.com/gptbantwal/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-pink-300 font-bold transition cursor-pointer"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-pink-500/10 hover:bg-pink-500/20 active:bg-pink-500/30 border border-pink-500/30 text-pink-300 font-bold transition duration-150 cursor-pointer active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400"
             >
               <Instagram className="w-3.5 h-3.5 text-pink-400" />
               <span>@gptbantwal</span>
@@ -134,7 +134,7 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
               href="https://www.instagram.com/blackbyte_cs/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/30 text-pink-300 font-bold transition cursor-pointer"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-pink-500/10 hover:bg-pink-500/20 active:bg-pink-500/30 border border-pink-500/30 text-pink-300 font-bold transition duration-150 cursor-pointer active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400"
             >
               <Instagram className="w-3.5 h-3.5 text-pink-400" />
               <span>@blackbyte_cs</span>
@@ -145,8 +145,9 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
         {/* Back to Top */}
         <div>
           <button
+            type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-xs font-mono text-slate-400 hover:text-amber-400 transition cursor-pointer"
+            className="text-xs font-mono text-slate-400 hover:text-amber-400 active:text-amber-300 transition-colors cursor-pointer px-3 py-1.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           >
             {t.backToTop}
           </button>

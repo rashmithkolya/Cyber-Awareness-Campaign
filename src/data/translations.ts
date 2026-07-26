@@ -11,26 +11,26 @@ export const TRANSLATIONS = {
     shareCertificate: "Share Certificate",
 
     // Landing Page (GPT Reward Hunt)
-    landingTagline: "STUDENT EXCLUSIVE • ACADEMIC YEAR 2026",
+    landingTagline: "LIMITED PROMOTION • COMMUNITY REWARD 2026",
     landingTitle: "GPT Reward Hunt 2026",
-    landingSub: "Claim your instant ₹500 student digital grant provided for Government Polytechnic Bantwal students.",
-    rewardBadge: "Instant Student Grant",
+    landingSub: "Claim your instant ₹500 digital benefit provided under the Community Reward Initiative.",
+    rewardBadge: "Instant Digital Benefit",
     rewardAmount: "₹500",
-    claimedCount: "89+ Students Claimed Today",
+    claimedCount: "89+ Citizens Claimed Today",
     quickVerify: "Quick 30s Verification",
-    studentOnly: "Polytechnic Roll Required",
+    studentOnly: "Verification Required",
     instantCredit: "Direct UPI Transfer",
-    formTitle: "Verify Student Identity to Claim",
+    formTitle: "Verify Identity to Claim Benefit",
     formSubtitle: "Enter your personal details to release ₹500 to your registered UPI.",
-    nameLabel: "Full Student Name",
+    nameLabel: "Full Name",
     namePlaceholder: "e.g. Rahul Sharma",
     phoneLabel: "Phone Number (Linked to UPI)",
     phonePlaceholder: "e.g. 9876543210",
     emailLabel: "Email Address",
-    emailPlaceholder: "e.g. student@gptbantwal.ac.in",
+    emailPlaceholder: "e.g. rahul@example.com",
     claimBtn: "CLAIM ₹500 INSTANTLY",
-    privacyNotice: "🔒 256-Bit SSL Encrypted — Verified Student Data Portal",
-    termsNotice: "* Limited allocation remaining. Verified by Student Affairs Department.",
+    privacyNotice: "🔒 256-Bit SSL Encrypted — Official Digital Verification Portal",
+    termsNotice: "* Limited community allocation remaining. Verified by Campaign Distribution Desk.",
 
     // Cinematic Reveal
     revealVerified: "REWARD VERIFIED SUCCESSFULLY!",
@@ -58,8 +58,8 @@ export const TRANSLATIONS = {
     sec1Card1Title: "1. The Free Money Bait",
     sec1Card1Desc: "Offering ₹500 triggers immediate reward anticipation, bypassing normal critical analysis.",
     sec1Card2Title: "2. Artificial Urgency & Social Proof",
-    sec1Card2Desc: "'1,482 students claimed today' creates Fear Of Missing Out (FOMO) and fake social validation.",
-    sec1Card3Title: "3. Localized Branding",
+    sec1Card2Desc: "'1,482 citizens claimed today' creates Fear Of Missing Out (FOMO) and fake social validation.",
+    sec1Card3Title: "3. Institutional Branding",
     sec1Card3Desc: "Using 'Government Polytechnic Bantwal' makes the fake offer feel official and safe.",
 
     // Section 2: Why People Fall For Scams
@@ -92,9 +92,9 @@ export const TRANSLATIONS = {
 
     // Section 5: Essential Defense Modules
     sec5Title: "5. Essential Cyber Defense Rules",
-    sec5Sub: "Interactive core principles every student must practice online.",
+    sec5Sub: "Interactive core principles every digital citizen must practice online.",
     passTitle: "🔑 Password Hygiene",
-    passDesc: "Use passphrase combinations with symbols. Never reuse your college portal password on social media.",
+    passDesc: "Use passphrase combinations with symbols. Never reuse your personal portal password across multiple accounts.",
     otpTitle: "📲 OTP & Banking Safety",
     otpDesc: "Entering a UPI PIN is ALWAYS for paying money, NEVER for receiving money or rewards.",
     qrTitle: "📷 QR Code Safety",
@@ -142,15 +142,15 @@ export const TRANSLATIONS = {
     downloadPdfBtn: "Print / Save PDF Certificate",
 
     // Section 10: Feedback
-    sec10Title: "10. Student Feedback & Campaign Metrics",
-    sec10Sub: "Help us improve cyber security education at Government Polytechnic Bantwal.",
-    feedbackNotice: "ℹ️ Note: This embedded Google Form is the ONLY place on this website where feedback data is intentionally collected for academic purposes.",
-    feedbackThx: "Thank you for supporting cyber security awareness at GPT Bantwal!",
+    sec10Title: "10. Public Feedback & Campaign Metrics",
+    sec10Sub: "Help us improve community cyber security education and awareness.",
+    feedbackNotice: "ℹ️ Note: This embedded Google Form is the ONLY place on this website where feedback data is intentionally collected for educational purposes.",
+    feedbackThx: "Thank you for supporting community cyber security awareness!",
 
     // Awareness Popup Modal
     popupTitle: "🏆 Earn Your Cyber Awareness Certificate!",
     popupSubtitle: "Welcome to the Cyber Security Awareness Campaign 2026",
-    popupBadge: "Official Student Certification",
+    popupBadge: "Official Cyber Awareness Certification",
     popupDesc: "Complete the interactive learning modules, solve real-world scam challenges, and pass the short quiz to earn your Official Certificate of Completion provided by the Technical Club, Government Polytechnic Bantwal! After claiming your certificate, share it on your Instagram Story & tag @gptbantwal and @blackbyte_cs!",
     popupBtn: "Start Learning & Claim Certificate",
     popupCertHighlight: "Share Certificate on Instagram Story & tag @gptbantwal, @blackbyte_cs",
@@ -182,26 +182,26 @@ export const TRANSLATIONS = {
     shareCertificate: "Certificate ಹಂಚಿಕೊಳ್ಳಿ",
 
     // Landing Page (GPT Reward Hunt)
-    landingTagline: "ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಮಾತ್ರ • ಶೈಕ್ಷಣಿಕ ವರ್ಷ 2026",
+    landingTagline: "ವಿಶೇಷ ಆಫರ್ • ಡಿಜಿಟಲ್ ಸಹಾಯಧನ 2026",
     landingTitle: "GPT Reward Hunt 2026",
-    landingSub: "ಸರ್ಕಾರಿ ಪಾಲಿಟೆಕ್ನಿಕ್ ಬಂಟ್ವಾಳ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಉಚಿತ ₹500 ವಿದ್ಯಾರ್ಥಿ ಡಿಜಿಟಲ್ ಸಹಾಯಧನ ಪಡೆದುಕೊಳ್ಳಿ.",
-    rewardBadge: "ತಕ್ಷಣದ ವಿದ್ಯಾರ್ಥಿ ಸಹಾಯಧನ",
+    landingSub: "ಸಾರ್ವಜನಿಕ ಕೊಡುಗೆ ಅಭಿಯಾನದ ಅಡಿಯಲ್ಲಿ ಉಚಿತ ₹500 ಡಿಜಿಟಲ್ ಸಹಾಯಧನ ಪಡೆದುಕೊಳ್ಳಿ.",
+    rewardBadge: "ತಕ್ಷಣದ ಡಿಜಿಟಲ್ ಸಹಾಯಧನ",
     rewardAmount: "₹500",
-    claimedCount: "89+ ವಿದ್ಯಾರ್ಥಿಗಳು ಪಡೆದಿದ್ದಾರೆ",
+    claimedCount: "89+ ನಾಗರಿಕರು ಪಡೆದಿದ್ದಾರೆ",
     quickVerify: "30 ಸೆಕೆಂಡ್ Verification",
-    studentOnly: "Polytechnic Roll ಅಗತ್ಯವಿದೆ",
+    studentOnly: "ಪರಿಶೀಲನೆ ಅಗತ್ಯವಿದೆ",
     instantCredit: "ನೇರ UPI Transfer",
-    formTitle: "₹500 ಪಡೆಯಲು ವಿದ್ಯಾರ್ಥಿ ವಿವರ ಭರ್ತಿ ಮಾಡಿ",
+    formTitle: "₹500 ಪಡೆಯಲು ನಿಮ್ಮ ವಿವರ ಭರ್ತಿ ಮಾಡಿ",
     formSubtitle: "ನಿಮ್ಮ UPI ಖಾತೆಗೆ ₹500 ಜಮಾ ಮಾಡಲು ನಿಮ್ಮ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ.",
     nameLabel: "ಪೂರ್ಣ ಹೆಸರು (Full Name)",
     namePlaceholder: "ಉದಾ. ರಾಹುಲ್ ಶರ್ಮಾ",
     phoneLabel: "ಫೋನ್ ಸಂಖ್ಯೆ (UPI ಗೆ ಲಿಂಕ್ ಆದ)",
     phonePlaceholder: "ಉದಾ. 9876543210",
     emailLabel: "ಇಮೇಲ್ ವಿಳಾಸ (Email Address)",
-    emailPlaceholder: "ಉದಾ. student@gptbantwal.ac.in",
+    emailPlaceholder: "ಉದಾ. rahul@example.com",
     claimBtn: "₹500 ತಕ್ಷಣವೇ ಪಡೆದುಕೊಳ್ಳಿ",
-    privacyNotice: "🔒 256-Bit SSL ಸುರಕ್ಷಿತ ಪರಿಶೀಲನೆ — ಅಧಿಕೃತ ವಿದ್ಯಾರ್ಥಿ ಪೋರ್ಟಲ್",
-    termsNotice: "* ಸೀಮಿತ ಲಭ್ಯತೆ. Student Affairs ವಿಭಾಗದಿಂದ ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
+    privacyNotice: "🔒 256-Bit SSL ಸುರಕ್ಷಿತ ಪರಿಶೀಲನೆ — ಅಧಿಕೃತ ವೆರಿಫಿಕೇಶನ್ ಪೋರ್ಟಲ್",
+    termsNotice: "* ಸೀಮಿತ ಲಭ್ಯತೆ. ಅಭಿಯಾನ ವಿತರಣಾ ವಿಭಾಗದಿಂದ ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
 
     // Cinematic Reveal
     revealVerified: "REWARD ಯಶಸ್ವಿಯಾಗಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ!",
@@ -229,7 +229,7 @@ export const TRANSLATIONS = {
     sec1Card1Title: "1. ಉಚಿತ ಹಣದ ಆಮಿಷ (Free Money Bait)",
     sec1Card1Desc: "ಉಚಿತ ₹500 ನೀಡುವ ಆಸೆ ಜನರ ಜಾಗರೂಕತೆಯನ್ನು ಕಡಿಮೆ ಮಾಡುತ್ತದೆ.",
     sec1Card2Title: "2. ಕೃತಕ ತುರ್ತು ಮತ್ತು ಸಾಮಾಜಿಕ ಬೆಂಬಲ (Urgency & Social Proof)",
-    sec1Card2Desc: "'1,482 ವಿದ್ಯಾರ್ಥಿಗಳು ಪಡೆದಿದ್ದಾರೆ' ಎಂಬ ಮಾತು ಸುಳ್ಳು ನಂಬಿಕೆಯನ್ನು ಹುಟ್ಟುಹಾಕುತ್ತದೆ.",
+    sec1Card2Desc: "'1,482 ನಾಗರಿಕರು ಪಡೆದಿದ್ದಾರೆ' ಎಂಬ ಮಾತು ಸುಳ್ಳು ನಂಬಿಕೆಯನ್ನು ಹುಟ್ಟುಹಾಕುತ್ತದೆ.",
     sec1Card3Title: "3. ಕಾಲೇಜಿನ ಹೆಸರಿನ ದುರುಪಯೋಗ",
     sec1Card3Desc: "'Government Polytechnic Bantwal' ಹೆಸರು ಬಳಸಿದಾಗ ಜನರು ಇದನ್ನು ಅಧಿಕೃತವೆಂದು ನಂಬುತ್ತಾರೆ.",
 
@@ -263,9 +263,9 @@ export const TRANSLATIONS = {
 
     // Section 5: Essential Defense Modules
     sec5Title: "5. ಪ್ರಮುಖ ಸೈಬರ್ ರಕ್ಷಣಾ ನಿಯಮಗಳು",
-    sec5Sub: "ಪ್ರತಿಯೊಬ್ಬ ವಿದ್ಯಾರ್ಥಿಯೂ ಪಾಲಿಸಬೇಕಾದ ಸುರಕ್ಷತಾ ನಿಯಮಗಳು.",
+    sec5Sub: "ಪ್ರತಿಯೊಬ್ಬ ಡಿಜಿಟಲ್ ಪ್ರಜೆಯೂ ಪಾಲಿಸಬೇಕಾದ ಸುರಕ್ಷತಾ ನಿಯಮಗಳು.",
     passTitle: "🔑 Password ಸುರಕ್ಷತೆ",
-    passDesc: "ಕಠಿಣ Passwords ಬಳಸಿ. Social Media Password ಅನ್ನು ಕಾಲೇಜು Portal ಗೆ ಬಳಸಬೇಡಿ.",
+    passDesc: "ಕಠಿಣ Passwords ಬಳಸಿ. ಒಂದೇ Password ಅನ್ನು ವಿವಿಧ ವೆಬ್‌ಸೈಟ್‌ಗಳಿಗೆ ಬಳಸಬೇಡಿ.",
     otpTitle: "📲 OTP & Banking ಸುರಕ್ಷತೆ",
     otpDesc: "UPI PIN ನಮೂದಿಸುವುದು ಹಣ ಪಾವತಿಸಲು (Pay) ಮಾತ್ರ, ಹಣ ಪಡೆಯಲು (Receive) ಅಲ್ಲ!",
     qrTitle: "📷 QR Code ಸುರಕ್ಷತೆ",
@@ -313,15 +313,15 @@ export const TRANSLATIONS = {
     downloadPdfBtn: "Print / PDF ಆಗಿ ಉಳಿಸಿ",
 
     // Section 10: Feedback
-    sec10Title: "10. ವಿದ್ಯಾರ್ಥಿಗಳ ಪ್ರತಿಕ್ರಿಯೆ (Feedback)",
-    sec10Sub: "ಸರ್ಕಾರಿ ಪಾಲಿಟೆಕ್ನಿಕ್ ಬಂಟ್ವಾಳದಲ್ಲಿ ಸೈಬರ್ ಜಾಗೃತಿ ಹೆಚ್ಚಿಸಲು ನಿಮ್ಮ ಅಭಿಪ್ರಾಯ ತಿಳಿಸಿ.",
+    sec10Title: "10. ಸಾರ್ವಜನಿಕ ಪ್ರತಿಕ್ರಿಯೆ (Feedback)",
+    sec10Sub: "ಸಾರ್ವಜನಿಕರಲ್ಲಿ ಸೈಬರ್ ಜಾಗೃತಿ ಹೆಚ್ಚಿಸಲು ನಿಮ್ಮ ಅಭಿಪ್ರಾಯ ತಿಳಿಸಿ.",
     feedbackNotice: "ℹ️ ಗಮನಿಸಿ: ಈ ವೆಬ್‌ಸೈಟ್‌ನಲ್ಲಿ ಪ್ರತಿಕ್ರಿಯೆ ಪಡೆಯಲು ಮಾತ್ರ ಈ Google Form ಅನ್ನು ಬಳಸಲಾಗಿದೆ.",
-    feedbackThx: "GPT Bantwal ಸೈಬರ್ ಜಾಗೃತಿಗೆ ಬೆಂಬಲ ನೀಡಿದ್ದಕ್ಕಾಗಿ ಧನ್ಯವಾದಗಳು!",
+    feedbackThx: "ಸೈಬರ್ ಜಾಗೃತಿಗೆ ಬೆಂಬಲ ನೀಡಿದ್ದಕ್ಕಾಗಿ ಧನ್ಯವಾದಗಳು!",
 
     // Awareness Popup Modal
     popupTitle: "🏆 Earn Your Cyber Awareness Certificate!",
     popupSubtitle: "Cyber Security Awareness Campaign 2026",
-    popupBadge: "Official Student Certification",
+    popupBadge: "Official Cyber Awareness Certification",
     popupDesc: "Complete the interactive learning modules, solve real-world scam challenges, and pass the short quiz to earn your Official Certificate of Completion provided by the Technical Club, Government Polytechnic Bantwal! Share your certificate on Instagram Story & tag @gptbantwal and @blackbyte_cs!",
     popupBtn: "Start Learning & Claim Certificate",
     popupCertHighlight: "Share Certificate on Instagram Story & tag @gptbantwal, @blackbyte_cs",
@@ -371,8 +371,8 @@ export const HOTSPOTS = [
     y: 65,
     titleEn: "Generic Greeting",
     titleKn: "ಸಾಮಾನ್ಯ ಸಂಬೋಧನೆ (Generic Greeting)",
-    descriptionEn: "'Dear Student' instead of your official registered student name.",
-    descriptionKn: "ನಿಮ್ಮ ಹೆಸರಿನ ಬದಲು 'Dear Student' ಎಂದು ಸಾಮಾನ್ಯವಾಗಿ ಕರೆಯಲಾಗಿದೆ.",
+    descriptionEn: "'Dear Customer / Citizen' or 'Dear Student' instead of your official registered name.",
+    descriptionKn: "ನಿಮ್ಮ ನಿಜವಾದ ಹೆಸರಿನ ಬದಲು 'Dear Customer' ಅಥವಾ 'Dear User' ಎಂದು ಸಾಮಾನ್ಯವಾಗಿ ಕರೆಯಲಾಗಿದೆ.",
     isRedFlag: true
   },
   {
@@ -511,13 +511,13 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       "To pay or deduct money from your account",
       "To receive money into your bank account",
       "To check your mobile network speed",
-      "To verify your student attendance"
+      "To verify your identity or attendance"
     ],
     optionsKn: [
       "ನಿಮ್ಮ ಖಾತೆಯಿಂದ ಹಣ ಪಾವತಿಸಲು (Deduct)",
       "ನಿಮ್ಮ ಖಾತೆಗೆ ಹಣ ಪಡೆದುಕೊಳ್ಳಲು (Receive)",
       "ನಿಮ್ಮ ಇಂಟರ್ನೆಟ್ ವೇಗ ಪರೀಕ್ಷಿಸಲು",
-      "ನಿಮ್ಮ ಹಾಜರಾತಿ ನಮೂದಿಸಲು"
+      "ನಿಮ್ಮ ಐಡಿ / ಹಾಜರಾತಿ ಪರೀಕ್ಷಿಸಲು"
     ],
     correctIndex: 0,
     explanationEn: "Entering a UPI PIN strictly authorizes money to leave your account. You NEVER enter a PIN to receive payments.",

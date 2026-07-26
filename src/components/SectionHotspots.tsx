@@ -60,60 +60,65 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
           <div className="p-5 text-slate-200 space-y-4 text-xs sm:text-sm font-sans relative">
             
             {/* Hotspot 1: Sender */}
-            <div
+            <button
+              type="button"
               onClick={() => handleSpotClick('h1')}
-              className={`p-2.5 rounded-lg border transition-all duration-200 transform hover:scale-[1.015] active:scale-[0.99] cursor-pointer relative ${selectedSpot === 'h1' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm hover:shadow-md'}`}
+              className={`w-full text-left p-3 rounded-xl border transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${selectedSpot === 'h1' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm'}`}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                 <div>
                   <span className="font-semibold text-slate-400">From: </span>
                   <span className="text-rose-400 font-mono font-bold">GPT Support &lt;admin@gpt-reward-grant.xyz&gt;</span>
                 </div>
-                <span className="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded font-mono">HOTSPOT #1</span>
+                <span className="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded font-mono shrink-0 self-start sm:self-auto">HOTSPOT #1</span>
               </div>
-            </div>
+            </button>
 
             {/* Hotspot 2: Urgency Header */}
-            <div
+            <button
+              type="button"
               onClick={() => handleSpotClick('h2')}
-              className={`p-3 rounded-lg border transition-all duration-200 transform hover:scale-[1.015] active:scale-[0.99] cursor-pointer relative ${selectedSpot === 'h2' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm hover:shadow-md'}`}
+              className={`w-full text-left p-3.5 rounded-xl border transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${selectedSpot === 'h2' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm'}`}
             >
-              <div className="flex items-center justify-between">
-                <h3 className="text-base font-black text-amber-400 uppercase tracking-tight">
-                  🚨 URGENT: YOUR ₹500 STUDENT GRANT EXPIRES IN 2 HOURS!
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-sm sm:text-base font-black text-amber-400 uppercase tracking-tight">
+                  🚨 URGENT: YOUR ₹500 DIGITAL BENEFIT EXPIRES IN 2 HOURS!
                 </h3>
                 <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-mono shrink-0">HOTSPOT #2</span>
               </div>
-            </div>
+            </button>
 
             {/* Hotspot 3: Body & Greeting */}
-            <div
+            <button
+              type="button"
               onClick={() => handleSpotClick('h3')}
-              className={`p-3 rounded-lg border transition-all duration-200 transform hover:scale-[1.015] active:scale-[0.99] cursor-pointer relative ${selectedSpot === 'h3' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm hover:shadow-md'}`}
+              className={`w-full text-left p-3.5 rounded-xl border transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${selectedSpot === 'h3' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm'}`}
             >
               <p className="text-slate-300 leading-relaxed">
-                <span className="font-bold text-amber-300 underline">Dear Student,</span>
+                <span className="font-bold text-amber-300 underline">Dear Customer / Valued User,</span>
               </p>
               <p className="text-slate-300 leading-relaxed mt-2">
-                Your ₹500 student digital grant from Government Polytechnic Bantwal is ready for disbursement. To complete verification, click the link below before time runs out.
+                Your ₹500 digital reward benefit is ready for disbursement. To complete verification, click the link below before time runs out.
               </p>
-              <div className="mt-2 text-[10px] text-amber-300 font-mono">
-                Click to inspect greeting red flag
+              <div className="mt-2 text-[10px] text-amber-300 font-mono flex items-center space-x-1">
+                <Info className="w-3 h-3 shrink-0" />
+                <span>HOTSPOT #3: Generic Greeting Red Flag</span>
               </div>
-            </div>
+            </button>
 
             {/* Hotspot 4: Action Button */}
-            <div
+            <button
+              type="button"
               onClick={() => handleSpotClick('h4')}
-              className={`p-3 rounded-lg border transition-all duration-200 transform hover:scale-[1.015] active:scale-[0.99] cursor-pointer text-center relative ${selectedSpot === 'h4' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm hover:shadow-md'}`}
+              className={`w-full text-center p-3.5 rounded-xl border transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${selectedSpot === 'h4' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm'}`}
             >
-              <div className="py-2.5 px-4 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs inline-block">
+              <div className="py-2.5 px-5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs inline-block shadow-md">
                 CLAIM ₹500 NOW (bit.ly/claim-500)
               </div>
               <p className="text-[10px] text-rose-400 font-mono mt-2">
-                HOTSPOT #4: Hidden shortened URL
+                HOTSPOT #4: Hidden Shortened Suspicious URL
               </p>
-            </div>
+            </button>
 
           </div>
 

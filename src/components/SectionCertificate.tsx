@@ -21,7 +21,7 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
 
   // Stable Certificate ID based on user name or fallback
   const certId = useMemo(() => {
-    const raw = userData.name ? userData.name.toUpperCase() : 'STUDENT';
+    const raw = userData.name ? userData.name.toUpperCase() : 'DIGITAL CITIZEN';
     let hash = 0;
     for (let i = 0; i < raw.length; i++) {
       hash = (hash << 5) - hash + raw.charCodeAt(i);
@@ -87,8 +87,8 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
 
     try {
       const [logo1Img, logo2Img] = await Promise.all([
-        loadImage('./assets/images/logo-placeholder-1.svg'),
-        loadImage('./assets/images/logo-placeholder-2.svg'),
+        loadImage('./assets/images/logo-placeholder-1.png'),
+        loadImage('./assets/images/logo-placeholder-2.png'),
       ]);
 
       const canvas = document.createElement('canvas');
@@ -371,7 +371,7 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
               {/* Left Logo Placeholder */}
               <div className="flex items-center space-x-2">
                 <img
-                  src="./assets/images/logo-placeholder-1.svg"
+                  src="./assets/images/logo-placeholder-1.png"
                   alt="Institution Logo Placeholder"
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
                   referrerPolicy="no-referrer"
@@ -394,7 +394,7 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
               {/* Right Logo Placeholder */}
               <div className="flex items-center space-x-2">
                 <img
-                  src="./assets/images/logo-placeholder-2.svg"
+                  src="./assets/images/logo-placeholder-2.png"
                   alt="Technical Club Logo Placeholder"
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
                   referrerPolicy="no-referrer"
@@ -476,8 +476,9 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
       {/* Action Download Button */}
       <div className="flex items-center justify-center pt-2 no-print">
         <button
+          type="button"
           onClick={handleDownloadPng}
-          className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 transform hover:scale-[1.02] active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5 shadow-xl"
+          className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 active:from-emerald-600 active:to-cyan-600 active:brightness-90 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-150 transform hover:scale-[1.02] active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5 shadow-xl shadow-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
         >
           <Download className="w-5 h-5" />
           <span>Download Certificate (PNG)</span>

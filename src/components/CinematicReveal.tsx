@@ -148,7 +148,7 @@ export const CinematicReveal: React.FC<CinematicRevealProps> = ({
               <span>PAUSE & REFLECT</span>
             </div>
             <h3 className="text-3xl sm:text-4xl font-bold text-amber-300 tracking-tight">
-              {t.revealReflect.replace('{name}', userData.name || 'Student')}
+              {t.revealReflect.replace('{name}', userData.name || 'Visitor')}
             </h3>
             <p className="text-base sm:text-xl text-slate-200 leading-relaxed font-medium max-w-xl mx-auto">
               {t.revealTrustMsg}
