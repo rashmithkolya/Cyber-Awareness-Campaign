@@ -189,7 +189,14 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
           {/* Progress Indicator */}
           <div className="flex items-center justify-between text-xs font-mono text-slate-400">
             <span>{t.quizProgress.replace('{current}', String(currentIdx + 1)).replace('{total}', String(QUIZ_QUESTIONS.length))}</span>
-            <div className="w-36 bg-slate-900 h-2 rounded-full overflow-hidden">
+            <div
+              role="progressbar"
+              aria-valuenow={currentIdx + 1}
+              aria-valuemin={1}
+              aria-valuemax={QUIZ_QUESTIONS.length}
+              aria-label="Quiz progress"
+              className="w-36 bg-slate-900 h-2 rounded-full overflow-hidden"
+            >
               <div
                 className="bg-amber-400 h-full transition-all duration-300"
                 style={{ width: `${((currentIdx + 1) / QUIZ_QUESTIONS.length) * 100}%` }}

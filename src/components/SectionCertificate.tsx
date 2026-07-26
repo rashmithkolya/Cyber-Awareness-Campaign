@@ -1,7 +1,7 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useState } from 'react';
 import { Language, UserData } from '../types';
 import { TRANSLATIONS } from '../data/translations';
-import { Download, Award, CheckCircle2, Sparkles, Shield, QrCode } from 'lucide-react';
+import { Download, Award, CheckCircle2, Sparkles, Shield, Share2, Instagram, Copy, Check } from 'lucide-react';
 import { playClickSound, playSuccessSound } from '../utils/sound';
 import confetti from 'canvas-confetti';
 
@@ -19,7 +19,16 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
   const t = TRANSLATIONS[lang];
   const certRef = useRef<HTMLDivElement>(null);
 
-  // Stable Certificate ID based on user name or fallback
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyCaption = () => {
+    playSuccessSound();
+    const captionText = `I completed the Cyber Security Awareness Training & Scam Prevention Assessment by @gptbantwal CSE Technical Club (@blackbyte_cs)! Certified digital safety awareness. 🛡️✨`;
+    navigator.clipboard.writeText(captionText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
   const certId = useMemo(() => {
     const raw = userData.name ? userData.name.toUpperCase() : 'DIGITAL CITIZEN';
     let hash = 0;
@@ -76,10 +85,9 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
   const handleDownloadPng = async () => {
     playSuccessSound();
 
-    // Celebratory download confetti burst
     confetti({
-      particleCount: 100,
-      spread: 80,
+      particleCount: 120,
+      spread: 90,
       origin: { y: 0.6 },
       colors: ['#10b981', '#34d399', '#f59e0b', '#38bdf8', '#a855f7'],
       disableForReducedMotion: true,
@@ -91,6 +99,7 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
         loadImage('./assets/images/logo-placeholder-2.png'),
       ]);
 
+      // High-resolution A4 Landscape Canvas (2100 x 1485 px)
       const canvas = document.createElement('canvas');
       const width = 2100;
       const height = 1485;
@@ -99,202 +108,216 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      // 1. Clean Crisp White Background
+      // 1. Crisp Institutional Ivory Canvas Background
       const bgGrad = ctx.createLinearGradient(0, 0, width, height);
       bgGrad.addColorStop(0, '#ffffff');
-      bgGrad.addColorStop(0.5, '#fdfbf7');
+      bgGrad.addColorStop(0.5, '#fdfcf7');
       bgGrad.addColorStop(1, '#ffffff');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
-      // 2. Outer Decorative Deep Navy Blue Border
+      // 2. Micro Security Lattice Grid Pattern Background
+      ctx.save();
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = 0.35;
+      const step = 32;
+      for (let x = -height; x < width + height; x += step) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x + height, height);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x, height);
+        ctx.lineTo(x + height, 0);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // 3. Multi-line Frame: Heavy Deep Navy, Royal Gold Accent, Delicate Frame
+      // Deep Navy Outer Border
       ctx.strokeStyle = '#0f172a';
-      ctx.lineWidth = 14;
-      ctx.strokeRect(45, 45, width - 90, height - 90);
+      ctx.lineWidth = 16;
+      ctx.strokeRect(40, 40, width - 80, height - 80);
 
-      // Inner Royal Gold Accent Border
+      // Royal Gold Inner Filigree Accent Line
       ctx.strokeStyle = '#d97706';
-      ctx.lineWidth = 4;
-      ctx.strokeRect(62, 62, width - 124, height - 124);
+      ctx.lineWidth = 5;
+      ctx.strokeRect(58, 58, width - 116, height - 116);
 
-      // Delicate Thin Inner Navy Frame
+      // Delicate Thin Inner Parallel Slate Frame
       ctx.strokeStyle = '#cbd5e1';
-      ctx.lineWidth = 1.5;
-      ctx.strokeRect(74, 74, width - 148, height - 148);
+      ctx.lineWidth = 2;
+      ctx.strokeRect(70, 70, width - 140, height - 140);
 
       // Corner Filigree Ornaments
       const drawCorner = (x: number, y: number, angle: number) => {
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate((angle * Math.PI) / 180);
+
         ctx.strokeStyle = '#d97706';
         ctx.lineWidth = 4;
         ctx.beginPath();
-        ctx.moveTo(0, 45);
+        ctx.moveTo(0, 42);
         ctx.lineTo(0, 0);
-        ctx.lineTo(45, 0);
+        ctx.lineTo(42, 0);
         ctx.stroke();
+
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(10, 32);
+        ctx.lineTo(10, 10);
+        ctx.lineTo(32, 10);
+        ctx.stroke();
+
         ctx.restore();
       };
-      drawCorner(88, 88, 0);
-      drawCorner(width - 88, 88, 90);
-      drawCorner(width - 88, height - 88, 180);
-      drawCorner(88, height - 88, 270);
+      drawCorner(84, 84, 0);
+      drawCorner(width - 84, 84, 90);
+      drawCorner(width - 84, height - 84, 180);
+      drawCorner(84, height - 84, 270);
 
-      // 3. Faint Cybersecurity Watermark in Center Background
+      // 4. Faint Security Watermark Shield in Center
       ctx.save();
-      ctx.translate(width / 2, height / 2 + 30);
-      ctx.globalAlpha = 0.04;
-      ctx.strokeStyle = '#1e3a8a';
-      ctx.lineWidth = 8;
+      ctx.translate(width / 2, height / 2 + 20);
+      ctx.globalAlpha = 0.035;
+      ctx.strokeStyle = '#0f172a';
+      ctx.fillStyle = '#1e3a8a';
+      ctx.lineWidth = 9;
       ctx.beginPath();
-      ctx.moveTo(0, -180);
-      ctx.lineTo(160, -110);
-      ctx.lineTo(160, 60);
-      ctx.quadraticCurveTo(160, 180, 0, 240);
-      ctx.quadraticCurveTo(-160, 180, -160, 60);
-      ctx.lineTo(-160, -110);
+      ctx.moveTo(0, -200);
+      ctx.lineTo(180, -125);
+      ctx.lineTo(180, 65);
+      ctx.quadraticCurveTo(180, 200, 0, 260);
+      ctx.quadraticCurveTo(-180, 200, -180, 65);
+      ctx.lineTo(-180, -125);
       ctx.closePath();
       ctx.stroke();
       ctx.beginPath();
-      ctx.arc(0, 20, 90, 0, Math.PI * 2);
-      ctx.lineWidth = 4;
+      ctx.arc(0, 20, 95, 0, Math.PI * 2);
+      ctx.lineWidth = 5;
       ctx.stroke();
       ctx.restore();
 
-      // 4. Header Section: Logos & Titles
-      // Left Logo Placeholder
+      // 5. Header Section: Institutional Logos & Titles
       if (logo1Img) {
-        ctx.drawImage(logo1Img, 180, 120, 190, 190);
+        ctx.drawImage(logo1Img, 130, 95, 210, 210);
       }
-
-      // Right Logo Placeholder
       if (logo2Img) {
-        ctx.drawImage(logo2Img, width - 370, 120, 190, 190);
+        ctx.drawImage(logo2Img, width - 340, 95, 210, 210);
       }
 
-      // Center Institution Header Text
       ctx.textAlign = 'center';
 
       ctx.fillStyle = '#0f172a';
-      ctx.font = 'bold 48px Georgia, serif';
-      ctx.fillText('GOVERNMENT POLYTECHNIC BANTWAL', width / 2, 165);
+      ctx.font = 'bold 58px Georgia, serif';
+      ctx.fillText('GOVERNMENT POLYTECHNIC BANTWAL', width / 2, 150);
 
       ctx.fillStyle = '#b45309';
-      ctx.font = 'bold 28px monospace';
-      ctx.fillText('TECHNICAL CLUB', width / 2, 218);
+      ctx.font = 'bold 32px monospace';
+      ctx.fillText('TECHNICAL CLUB', width / 2, 210);
 
       ctx.fillStyle = '#475569';
-      ctx.font = '600 24px sans-serif';
-      ctx.fillText('DEPARTMENT OF COMPUTER SCIENCE ENGINEERING (CSE)', width / 2, 260);
+      ctx.font = '600 26px sans-serif';
+      ctx.fillText('DEPARTMENT OF COMPUTER SCIENCE ENGINEERING (CSE)', width / 2, 255);
 
-      // Decorative Horizontal Gold Line
+      // Gold Horizontal Separator
       ctx.strokeStyle = '#d97706';
-      ctx.lineWidth = 3.5;
+      ctx.lineWidth = 4;
       ctx.beginPath();
-      ctx.moveTo(width / 2 - 480, 300);
-      ctx.lineTo(width / 2 + 480, 300);
+      ctx.moveTo(width / 2 - 650, 295);
+      ctx.lineTo(width / 2 + 650, 295);
       ctx.stroke();
 
-      // 5. Main Title: CERTIFICATE OF PARTICIPATION
+      // 6. Certificate Main Title
       ctx.fillStyle = '#0f172a';
-      ctx.font = 'bold 72px Georgia, serif';
-      ctx.fillText('CERTIFICATE OF PARTICIPATION', width / 2, 410);
+      ctx.font = 'bold 84px Georgia, serif';
+      ctx.fillText('CERTIFICATE OF PARTICIPATION', width / 2, 420);
 
       ctx.fillStyle = '#64748b';
-      ctx.font = 'italic 32px Georgia, serif';
-      ctx.fillText('This is to certify that', width / 2, 490);
+      ctx.font = 'italic 38px Georgia, serif';
+      ctx.fillText('This is to certify that', width / 2, 500);
 
-      // 6. Recipient Name
+      // 7. Recipient Name - Grand Display Typography
       ctx.fillStyle = '#1e3a8a';
-      ctx.font = 'bold 92px Georgia, serif';
-      ctx.fillText(participantName, width / 2, 620);
+      ctx.font = 'bold 112px Georgia, serif';
+      ctx.fillText(participantName, width / 2, 660);
 
-      // Underline Bar beneath Name
+      // Gold Accent Bar under Recipient Name
       ctx.strokeStyle = '#d97706';
-      ctx.lineWidth = 4.5;
+      ctx.lineWidth = 7;
       ctx.beginPath();
-      ctx.moveTo(width / 2 - 530, 660);
-      ctx.lineTo(width / 2 + 530, 660);
+      ctx.moveTo(width / 2 - 680, 705);
+      ctx.lineTo(width / 2 + 680, 705);
       ctx.stroke();
 
-      // 7. Participation Citation
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(width / 2 - 600, 720);
+      ctx.lineTo(width / 2 + 600, 720);
+      ctx.stroke();
+
+      // 8. Achievement Description
       ctx.fillStyle = '#334155';
-      ctx.font = '30px sans-serif';
-      ctx.fillText('has actively participated in the Cyber Security Awareness Training,', width / 2, 755);
-      ctx.fillText('Phishing Prevention Demonstration, and Scam Verification Assessment.', width / 2, 805);
+      ctx.font = '32px sans-serif';
+      ctx.fillText('has actively completed the Cyber Security Awareness Training, Phishing Prevention Demonstration,', width / 2, 810);
+      ctx.fillText('and Scam Verification Assessment conducted by the Department of Computer Science Engineering.', width / 2, 860);
 
-      // 8. Quiz Score & Completion Badge (if passed)
-      let currentY = 875;
-      if (isUnlocked) {
-        ctx.fillStyle = '#ecfdf5';
-        ctx.strokeStyle = '#059669';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        if (typeof (ctx as any).roundRect === 'function') {
-          (ctx as any).roundRect(width / 2 - 360, currentY, 720, 64, 32);
-        } else {
-          ctx.rect(width / 2 - 360, currentY, 720, 64);
-        }
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.fillStyle = '#047857';
-        ctx.font = 'bold 26px sans-serif';
-        ctx.fillText('✓ Quiz Score: 100% • Verified Pass', width / 2, currentY + 42);
-
-        currentY += 95;
-      } else {
-        currentY += 20;
-      }
-
-      // 9. Campaign Tagline Box
-      ctx.fillStyle = '#fffbe2';
+      // 9. Campaign Motto Box
+      let currentY = 930;
+      ctx.fillStyle = '#fffbeb';
       ctx.strokeStyle = '#f59e0b';
       ctx.lineWidth = 2.5;
       ctx.beginPath();
       if (typeof (ctx as any).roundRect === 'function') {
-        (ctx as any).roundRect(width / 2 - 600, currentY, 1200, 80, 18);
+        (ctx as any).roundRect(width / 2 - 720, currentY, 1440, 95, 20);
       } else {
-        ctx.rect(width / 2 - 600, currentY, 1200, 80);
+        ctx.rect(width / 2 - 720, currentY, 1440, 95);
       }
       ctx.fill();
       ctx.stroke();
 
       ctx.fillStyle = '#92400e';
-      ctx.font = 'italic bold 34px Georgia, serif';
-      ctx.fillText('“Think Before You Click. Verify Before You Trust.”', width / 2, currentY + 51);
+      ctx.font = 'italic bold 38px Georgia, serif';
+      ctx.fillText('“Think Before You Click. Verify Before You Trust.”', width / 2, currentY + 60);
 
       // 10. Provision Statement
-      currentY += 130;
+      currentY = 1110;
       ctx.fillStyle = '#1e293b';
-      ctx.font = '600 25px sans-serif';
+      ctx.font = '600 26px sans-serif';
       ctx.fillText('Provided by Technical Club, Computer Science Engineering (CSE), Government Polytechnic Bantwal.', width / 2, currentY);
 
       // Separator Line
-      currentY += 50;
+      currentY = 1180;
       ctx.strokeStyle = '#cbd5e1';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.moveTo(180, currentY);
-      ctx.lineTo(width - 180, currentY);
+      ctx.moveTo(130, currentY);
+      ctx.lineTo(width - 130, currentY);
       ctx.stroke();
 
-      // 11. Footer: Date & Certificate ID
-      currentY += 65;
-      ctx.fillStyle = '#475569';
-      ctx.font = 'bold 26px monospace';
+      // 11. Footer: Issue Date, Certificate ID, Verification Status
+      currentY = 1260;
+      ctx.font = 'bold 28px monospace';
 
+      // Left: Issue Date
       ctx.textAlign = 'left';
-      ctx.fillText(`DATE: ${todayDate}`, 180, currentY);
+      ctx.fillStyle = '#475569';
+      ctx.fillText(`ISSUE DATE: ${todayDate}`, 130, currentY);
 
+      // Center: Verification Status: Digitally Verified
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#b45309';
-      ctx.fillText(`STATUS: VERIFIED CREDENTIAL`, width / 2, currentY);
+      ctx.fillStyle = '#047857';
+      ctx.fillText(`VERIFICATION STATUS: DIGITALLY VERIFIED`, width / 2, currentY);
 
+      // Right: Certificate ID
       ctx.textAlign = 'right';
       ctx.fillStyle = '#1e3a8a';
-      ctx.fillText(`CERTIFICATE ID: ${certId}`, width - 180, currentY);
+      ctx.fillText(`CERTIFICATE ID: ${certId}`, width - 130, currentY);
 
       // Download PNG
       const dataUrl = canvas.toDataURL('image/png');
@@ -348,124 +371,127 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
         <div
           id="certificate-frame"
           ref={certRef}
-          className="min-w-[850px] max-w-5xl mx-auto bg-white text-slate-900 border-[12px] border-slate-900 rounded-2xl p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden text-center space-y-6 aspect-[297/210] flex flex-col justify-between"
+          className="min-w-[900px] max-w-6xl mx-auto bg-gradient-to-br from-white via-slate-50/70 to-amber-50/20 text-slate-900 border-[16px] border-slate-900 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl relative overflow-hidden text-center aspect-[297/210] flex flex-col justify-between"
         >
-          {/* Inner Golden Accent Border Frame */}
-          <div className="absolute inset-3 border-2 border-amber-600 pointer-events-none rounded-xl" />
-          <div className="absolute inset-4 border border-slate-300 pointer-events-none rounded-lg" />
+          {/* Subtle Security Lattice Pattern SVG Overlay */}
+          <svg className="absolute inset-0 w-full h-full opacity-[0.035] pointer-events-none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+              <pattern id="security-lattice" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 0 20 L 40 20 M 20 0 L 20 40 M 0 0 L 40 40 M 0 40 L 40 0" fill="none" stroke="#0f172a" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#security-lattice)" />
+          </svg>
+
+          {/* Inner Golden & Delicate Accent Border Frame */}
+          <div className="absolute inset-3.5 border-2.5 border-amber-600 pointer-events-none rounded-2xl" />
+          <div className="absolute inset-5 border border-slate-300 pointer-events-none rounded-xl" />
 
           {/* Corner Filigree Highlights */}
-          <div className="absolute top-5 left-5 w-10 h-10 border-t-4 border-l-4 border-amber-600 pointer-events-none" />
-          <div className="absolute top-5 right-5 w-10 h-10 border-t-4 border-r-4 border-amber-600 pointer-events-none" />
-          <div className="absolute bottom-5 left-5 w-10 h-10 border-b-4 border-l-4 border-amber-600 pointer-events-none" />
-          <div className="absolute bottom-5 right-5 w-10 h-10 border-b-4 border-r-4 border-amber-600 pointer-events-none" />
+          <div className="absolute top-6 left-6 w-12 h-12 border-t-4 border-l-4 border-amber-600 pointer-events-none" />
+          <div className="absolute top-6 right-6 w-12 h-12 border-t-4 border-r-4 border-amber-600 pointer-events-none" />
+          <div className="absolute bottom-6 left-6 w-12 h-12 border-b-4 border-l-4 border-amber-600 pointer-events-none" />
+          <div className="absolute bottom-6 right-6 w-12 h-12 border-b-4 border-r-4 border-amber-600 pointer-events-none" />
 
-          {/* Background Cybersecurity Watermark */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none">
-            <Shield className="w-[450px] h-[450px] text-blue-900 stroke-[1]" />
+          {/* Background Cybersecurity Watermark Shield */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+            <Shield className="w-[500px] h-[500px] sm:w-[620px] sm:h-[620px] text-blue-950 stroke-[0.75]" />
           </div>
 
           {/* Top Header Row with Logos & Institutions */}
           <div className="relative z-10 space-y-3">
             <div className="flex items-center justify-between px-4 sm:px-8">
               {/* Left Logo Placeholder */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center justify-center w-16 h-16 sm:w-22 sm:h-22 lg:w-28 lg:h-28">
                 <img
                   src="./assets/images/logo-placeholder-1.png"
-                  alt="Institution Logo Placeholder"
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
+                  alt="Government Polytechnic Bantwal Logo"
+                  className="w-full h-full object-contain drop-shadow"
                   referrerPolicy="no-referrer"
                 />
               </div>
 
               {/* Center Institution Titles */}
-              <div className="text-center space-y-1">
-                <h3 className="text-xl sm:text-3xl font-black font-serif text-slate-900 tracking-wide uppercase">
+              <div className="text-center space-y-1 max-w-2xl mx-auto">
+                <h3 className="text-lg sm:text-3xl lg:text-4xl font-black font-serif text-slate-900 tracking-wide uppercase">
                   Government Polytechnic Bantwal
                 </h3>
-                <p className="text-xs sm:text-base font-mono font-bold text-amber-700 tracking-wider uppercase">
+                <p className="text-xs sm:text-base lg:text-lg font-mono font-bold text-amber-700 tracking-wider uppercase">
                   Technical Club
                 </p>
-                <p className="text-[11px] sm:text-xs lg:text-sm font-semibold text-slate-600 uppercase tracking-wide">
+                <p className="text-[10px] sm:text-xs lg:text-sm font-semibold text-slate-600 uppercase tracking-wide">
                   Department of Computer Science Engineering (CSE)
                 </p>
               </div>
 
               {/* Right Logo Placeholder */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center justify-center w-16 h-16 sm:w-22 sm:h-22 lg:w-28 lg:h-28">
                 <img
                   src="./assets/images/logo-placeholder-2.png"
-                  alt="Technical Club Logo Placeholder"
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow"
+                  alt="CSE Technical Club Logo"
+                  className="w-full h-full object-contain drop-shadow"
                   referrerPolicy="no-referrer"
                 />
               </div>
             </div>
 
-            <div className="w-4/5 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-auto" />
+            <div className="w-10/12 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-auto" />
           </div>
 
           {/* Certificate Main Title & Recipient Section */}
-          <div className="relative z-10 space-y-4 my-auto">
+          <div className="relative z-10 space-y-3 sm:space-y-4 lg:space-y-5 my-auto py-2">
             <div className="space-y-1">
-              <h1 className="text-3xl sm:text-5xl font-serif font-black tracking-wider text-slate-900 uppercase">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-black tracking-wider text-slate-900 uppercase">
                 Certificate of Participation
               </h1>
-              <p className="text-sm sm:text-lg text-slate-500 font-serif italic">
+              <p className="text-sm sm:text-xl lg:text-2xl text-slate-500 font-serif italic">
                 This is to certify that
               </p>
             </div>
 
-            {/* Recipient Name */}
-            <div className="py-2">
-              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-black text-blue-900 tracking-tight">
+            {/* Recipient Name - Grand Display Typography */}
+            <div className="py-1">
+              <h2 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-black text-blue-950 tracking-tight">
                 {participantName}
               </h2>
-              <div className="w-3/5 h-1.5 bg-amber-600 mx-auto mt-2 rounded-full" />
+              <div className="w-3/5 max-w-2xl h-1.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 mx-auto mt-2 rounded-full" />
             </div>
 
-            {/* Participation Citation Statement */}
-            <p className="text-xs sm:text-base lg:text-lg text-slate-700 max-w-3xl mx-auto leading-relaxed font-sans px-4">
-              has actively participated in the Cyber Security Awareness Training, Phishing Prevention Demonstration, and Scam Verification Assessment.
+            {/* Achievement Description Statement */}
+            <p className="text-xs sm:text-base lg:text-xl text-slate-700 max-w-3xl lg:max-w-4xl mx-auto leading-relaxed font-sans px-4 font-medium">
+              has actively completed the Cyber Security Awareness Training, Phishing Prevention Demonstration, and Scam Verification Assessment conducted by the Department of Computer Science Engineering.
             </p>
-
-            {/* Optional Quiz Score Badge */}
-            {isUnlocked && (
-              <div className="inline-flex items-center space-x-2 px-5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-bold shadow-sm">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>Quiz Score: 100% • Verified Pass</span>
-              </div>
-            )}
 
             {/* Campaign Tagline Box */}
-            <div className="inline-block px-8 py-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-serif italic text-xs sm:text-base lg:text-lg font-semibold shadow-sm">
-              “Think Before You Click. Verify Before You Trust.”
+            <div>
+              <div className="inline-block px-8 sm:px-10 py-2.5 sm:py-3.5 rounded-2xl bg-amber-50/90 border-2 border-amber-300/80 text-amber-950 font-serif italic text-xs sm:text-lg lg:text-xl font-bold shadow-xs">
+                “Think Before You Click. Verify Before You Trust.”
+              </div>
             </div>
-          </div>
 
-          {/* Provision & Verification Footer Section */}
-          <div className="relative z-10 space-y-3 pt-3 border-t border-slate-200">
             {/* Explicit Provision Note */}
-            <p className="text-xs sm:text-sm font-semibold text-slate-800">
+            <p className="text-[11px] sm:text-xs lg:text-sm font-semibold text-slate-700 pt-1">
               Provided by Technical Club, Computer Science Engineering (CSE), Government Polytechnic Bantwal.
             </p>
+          </div>
 
-            {/* Metadata Footer: Date, Verification ID */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-slate-600 pt-1">
-              <div className="flex items-center space-x-1">
-                <span className="text-slate-400">Date:</span>
-                <span className="font-bold text-slate-800">{todayDate}</span>
+          {/* Clean Digitally Verified Metadata Footer */}
+          <div className="relative z-10 pt-3 border-t-2 border-slate-200/90">
+            {/* Metadata Footer: Date, Verification ID, Digitally Verified Status */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm lg:text-base font-mono tracking-wider">
+              <div className="flex items-center space-x-2 text-slate-600">
+                <span className="text-slate-500 font-semibold uppercase">Issue Date:</span>
+                <span className="font-bold text-slate-900">{todayDate}</span>
               </div>
 
-              <div className="flex items-center space-x-1 text-amber-700 font-bold">
-                <Shield className="w-4 h-4" />
-                <span>Verified Credential</span>
+              <div className="flex items-center space-x-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 font-bold shadow-xs">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Verification Status: <strong className="text-emerald-700">Digitally Verified</strong></span>
               </div>
 
-              <div className="flex items-center space-x-1 text-blue-900 font-bold">
-                <QrCode className="w-4 h-4 text-slate-400" />
-                <span className="text-slate-400">Certificate ID:</span>
-                <span className="font-extrabold">{certId}</span>
+              <div className="flex items-center space-x-2 text-slate-600">
+                <span className="text-slate-500 font-semibold uppercase">Certificate ID:</span>
+                <span className="font-extrabold text-blue-950">{certId}</span>
               </div>
             </div>
           </div>
@@ -473,17 +499,135 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
         </div>
       </div>
 
-      {/* Action Download Button */}
-      <div className="flex items-center justify-center pt-2 no-print">
+      {/* Action Download & Share Buttons */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 no-print">
         <button
           type="button"
           onClick={handleDownloadPng}
-          className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 active:from-emerald-600 active:to-cyan-600 active:brightness-90 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-150 transform hover:scale-[1.02] active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5 shadow-xl shadow-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 active:from-emerald-600 active:to-cyan-600 active:brightness-90 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-150 transform hover:scale-[1.01] active:scale-95 cursor-pointer flex items-center justify-center space-x-2 shadow-xl shadow-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
         >
-          <Download className="w-5 h-5" />
+          <Download className="w-4 h-4" />
           <span>Download Certificate (PNG)</span>
         </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            playClickSound();
+            setShowShareModal(true);
+          }}
+          className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 active:from-pink-700 active:to-purple-700 text-white font-bold text-xs sm:text-sm transition-all duration-150 active:scale-95 cursor-pointer flex items-center justify-center space-x-2 shadow-lg shadow-pink-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400"
+        >
+          <Share2 className="w-4 h-4 text-pink-200" />
+          <span>Share on Instagram</span>
+        </button>
       </div>
+
+      {/* Instagram Story Sharing Modal */}
+      {showShareModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="share-modal-title"
+          className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in no-print"
+        >
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center space-x-2">
+                <Instagram className="w-5 h-5 text-pink-400" />
+                <h3 id="share-modal-title" className="text-base font-bold text-white">
+                  Share Your Certificate on Instagram
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowShareModal(false)}
+                className="text-slate-400 hover:text-white text-xs px-2.5 py-1 bg-slate-800 rounded-lg transition cursor-pointer"
+              >
+                ✕ Close
+              </button>
+            </div>
+
+            <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p>
+                Show your support for digital safety! Share your downloaded certificate image on Instagram Story and tag our official handles:
+              </p>
+
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="text-slate-400">Official Tags:</span>
+                  <div className="flex items-center space-x-2">
+                    <a
+                      href="https://www.instagram.com/gptbantwal/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-pink-400 hover:underline font-bold"
+                    >
+                      @gptbantwal
+                    </a>
+                    <span className="text-slate-600">•</span>
+                    <a
+                      href="https://www.instagram.com/blackbyte_cs/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-pink-400 hover:underline font-bold"
+                    >
+                      @blackbyte_cs
+                    </a>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-slate-900 rounded-lg border border-slate-800/80 font-mono text-xs text-amber-300 flex items-center justify-between gap-2">
+                  <span className="truncate">
+                    “I completed the Cyber Security Awareness Training by @gptbantwal CSE Technical Club (@blackbyte_cs)! 🛡️”
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleCopyCaption}
+                    className="px-3 py-1.5 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs shrink-0 flex items-center space-x-1 transition cursor-pointer"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-emerald-400">Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy Caption</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 flex items-center space-x-2">
+                <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Tip: Download your certificate image first using the button above, then add it to your Instagram Story!</span>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-between gap-2">
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold text-xs rounded-xl transition cursor-pointer inline-flex items-center space-x-1.5"
+              >
+                <Instagram className="w-4 h-4" />
+                <span>Open Instagram App</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => setShowShareModal(false)}
+                className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs rounded-xl transition cursor-pointer"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </section>
   );

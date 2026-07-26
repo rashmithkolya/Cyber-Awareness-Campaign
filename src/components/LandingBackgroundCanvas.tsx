@@ -45,6 +45,7 @@ export const LandingBackgroundCanvas: React.FC = () => {
     if (!ctx) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth < 768 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 
     let animId: number;
     let width = 0;
@@ -57,7 +58,7 @@ export const LandingBackgroundCanvas: React.FC = () => {
       y: -1000,
       targetX: -1000,
       targetY: -1000,
-      radius: 180,
+      radius: isMobile ? 120 : 180,
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -80,19 +81,23 @@ export const LandingBackgroundCanvas: React.FC = () => {
     let lightRays: LightRay[] = [];
 
     const initScene = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Limit DPR on mobile/low-end devices to conserve GPU buffer memory and pixel shading cycles
+      const maxDpr = isMobile ? 1 : 1.5;
+      dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
       width = window.innerWidth;
       height = window.innerHeight;
 
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
       ctx.scale(dpr, dpr);
 
-      // 1. Ambient Sparkle Particles
-      const particleCount = Math.min(Math.floor((width * height) / 16000), 50);
+      // 1. Ambient Sparkle Particles - Scaled down for mobile performance
+      const baseDivisor = isMobile ? 32000 : 16000;
+      const maxParticles = isMobile ? 18 : 50;
+      const particleCount = Math.min(Math.floor((width * height) / baseDivisor), maxParticles);
       const colors = ['#f59e0b', '#fbbf24', '#06b6d4', '#a855f7', '#ec4899', '#38bdf8'];
 
       particles = Array.from({ length: particleCount }).map(() => {
@@ -111,15 +116,16 @@ export const LandingBackgroundCanvas: React.FC = () => {
         };
       });
 
-      // 2. Floating 3D Glass Geometry
-      const glassCount = Math.min(Math.floor(width / 280), 7);
+      // 2. Floating 3D Glass Geometry - Reduced count on mobile
+      const maxGlass = isMobile ? 3 : 7;
+      const glassCount = Math.min(Math.floor(width / 280), maxGlass);
       const types: ('polygon' | 'ring' | 'diamond')[] = ['polygon', 'ring', 'diamond'];
 
       glassShapes = Array.from({ length: glassCount }).map(() => ({
         x: Math.random() * width,
         y: Math.random() * height,
         z: Math.random() * 0.7 + 0.3,
-        size: Math.random() * 32 + 20,
+        size: Math.random() * (isMobile ? 20 : 32) + 16,
         vx: (Math.random() - 0.5) * 0.25,
         vy: (Math.random() - 0.5) * 0.25,
         rotation: Math.random() * Math.PI * 2,
@@ -129,12 +135,14 @@ export const LandingBackgroundCanvas: React.FC = () => {
         color: colors[Math.floor(Math.random() * colors.length)],
       }));
 
-      // 3. Volumetric Atmospheric Light Rays
-      lightRays = [
-        { angle: Math.PI * 0.35, width: 90, length: height * 1.2, alpha: 0.04, speed: 0.0008 },
-        { angle: Math.PI * 0.42, width: 140, length: height * 1.4, alpha: 0.03, speed: -0.0005 },
-        { angle: Math.PI * 0.48, width: 110, length: height * 1.3, alpha: 0.035, speed: 0.0006 },
-      ];
+      // 3. Volumetric Atmospheric Light Rays (Simplified on mobile)
+      lightRays = isMobile
+        ? [{ angle: Math.PI * 0.4, width: 80, length: height * 1.1, alpha: 0.03, speed: 0.0005 }]
+        : [
+            { angle: Math.PI * 0.35, width: 90, length: height * 1.2, alpha: 0.04, speed: 0.0008 },
+            { angle: Math.PI * 0.42, width: 140, length: height * 1.4, alpha: 0.03, speed: -0.0005 },
+            { angle: Math.PI * 0.48, width: 110, length: height * 1.3, alpha: 0.035, speed: 0.0006 },
+          ];
     };
 
     initScene();
@@ -317,31 +325,43 @@ export const LandingBackgroundCanvas: React.FC = () => {
         ctx.fillStyle = `${p.color}20`;
         ctx.fill();
 
-        // Connect nearby particles with subtle laser thread
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const pdx = p.x - p2.x;
-          const pdy = p.y - p2.y;
-          const pdist = Math.sqrt(pdx * pdx + pdy * pdy);
+        // Connect nearby particles with subtle laser thread (Skip line checks on small mobile screens to save O(N^2) math)
+        if (!isMobile) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const pdx = p.x - p2.x;
+            const pdy = p.y - p2.y;
+            const pdist = Math.sqrt(pdx * pdx + pdy * pdy);
 
-          if (pdist < 100) {
-            const lineAlpha = (1 - pdist / 100) * 0.18;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = p.color;
-            ctx.globalAlpha = lineAlpha;
-            ctx.lineWidth = 0.75;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
+            if (pdist < 100) {
+              const lineAlpha = (1 - pdist / 100) * 0.18;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = p.color;
+              ctx.globalAlpha = lineAlpha;
+              ctx.lineWidth = 0.75;
+              ctx.stroke();
+              ctx.globalAlpha = 1;
+            }
           }
         }
       }
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && document.visibilityState === 'visible') {
         animId = requestAnimationFrame(render);
       }
     };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && !prefersReducedMotion) {
+        lastFrame = performance.now();
+        cancelAnimationFrame(animId);
+        animId = requestAnimationFrame(render);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     if (prefersReducedMotion) {
       render(performance.now());
@@ -351,6 +371,7 @@ export const LandingBackgroundCanvas: React.FC = () => {
 
     return () => {
       cancelAnimationFrame(animId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('resize', handleResize);

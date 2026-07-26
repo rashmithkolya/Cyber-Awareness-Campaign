@@ -62,6 +62,8 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
             {/* Hotspot 1: Sender */}
             <button
               type="button"
+              aria-expanded={selectedSpot === 'h1'}
+              aria-label="Inspect Sender Email Hotspot #1"
               onClick={() => handleSpotClick('h1')}
               className={`w-full text-left p-3 rounded-xl border transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${selectedSpot === 'h1' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm'}`}
             >
@@ -77,6 +79,8 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
             {/* Hotspot 2: Urgency Header */}
             <button
               type="button"
+              aria-expanded={selectedSpot === 'h2'}
+              aria-label="Inspect Urgency Subject Line Hotspot #2"
               onClick={() => handleSpotClick('h2')}
               className={`w-full text-left p-3.5 rounded-xl border transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${selectedSpot === 'h2' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm'}`}
             >
@@ -91,6 +95,8 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
             {/* Hotspot 3: Body & Greeting */}
             <button
               type="button"
+              aria-expanded={selectedSpot === 'h3'}
+              aria-label="Inspect Generic Greeting Hotspot #3"
               onClick={() => handleSpotClick('h3')}
               className={`w-full text-left p-3.5 rounded-xl border transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${selectedSpot === 'h3' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm'}`}
             >
@@ -109,6 +115,8 @@ export const SectionHotspots: React.FC<SectionHotspotsProps> = ({ lang }) => {
             {/* Hotspot 4: Action Button */}
             <button
               type="button"
+              aria-expanded={selectedSpot === 'h4'}
+              aria-label="Inspect Suspicious Action Link Hotspot #4"
               onClick={() => handleSpotClick('h4')}
               className={`w-full text-center p-3.5 rounded-xl border transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${selectedSpot === 'h4' ? 'bg-amber-500/20 border-amber-400 ring-2 ring-amber-400/40 scale-[1.01]' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 shadow-sm'}`}
             >

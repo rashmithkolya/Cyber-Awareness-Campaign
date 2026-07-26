@@ -21,6 +21,7 @@ export const AwarenessBackgroundCanvas: React.FC = () => {
     if (!ctx) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth < 768 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 
     let animId: number;
     let width = 0;
@@ -30,19 +31,22 @@ export const AwarenessBackgroundCanvas: React.FC = () => {
     let nodes: NetworkNode[] = [];
 
     const initScene = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const maxDpr = isMobile ? 1 : 1.5;
+      dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
       width = window.innerWidth;
       height = window.innerHeight;
 
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
       ctx.scale(dpr, dpr);
 
-      // Create calm, smooth ambient network nodes
-      const nodeCount = Math.min(Math.floor((width * height) / 24000), 32);
+      // Create calm, smooth ambient network nodes (reduced count on mobile)
+      const baseDivisor = isMobile ? 36000 : 24000;
+      const maxNodes = isMobile ? 14 : 32;
+      const nodeCount = Math.min(Math.floor((width * height) / baseDivisor), maxNodes);
       const colors = ['#06b6d4', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
 
       nodes = Array.from({ length: nodeCount }).map(() => ({
@@ -136,31 +140,43 @@ export const AwarenessBackgroundCanvas: React.FC = () => {
         ctx.fill();
         ctx.globalAlpha = 1;
 
-        // Draw Constellation Lines
-        for (let j = i + 1; j < nodes.length; j++) {
-          const node2 = nodes[j];
-          const dx = node.x - node2.x;
-          const dy = node.y - node2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+        // Draw Constellation Lines (skip on mobile to optimize O(N^2) checks)
+        if (!isMobile) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const node2 = nodes[j];
+            const dx = node.x - node2.x;
+            const dy = node.y - node2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 130) {
-            const lineAlpha = (1 - dist / 130) * 0.14;
-            ctx.beginPath();
-            ctx.moveTo(node.x, node.y);
-            ctx.lineTo(node2.x, node2.y);
-            ctx.strokeStyle = '#38bdf8';
-            ctx.globalAlpha = lineAlpha;
-            ctx.lineWidth = 0.75;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
+            if (dist < 130) {
+              const lineAlpha = (1 - dist / 130) * 0.14;
+              ctx.beginPath();
+              ctx.moveTo(node.x, node.y);
+              ctx.lineTo(node2.x, node2.y);
+              ctx.strokeStyle = '#38bdf8';
+              ctx.globalAlpha = lineAlpha;
+              ctx.lineWidth = 0.75;
+              ctx.stroke();
+              ctx.globalAlpha = 1;
+            }
           }
         }
       }
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && document.visibilityState === 'visible') {
         animId = requestAnimationFrame(render);
       }
     };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && !prefersReducedMotion) {
+        lastTime = performance.now();
+        cancelAnimationFrame(animId);
+        animId = requestAnimationFrame(render);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     if (prefersReducedMotion) {
       render(performance.now());
@@ -170,6 +186,7 @@ export const AwarenessBackgroundCanvas: React.FC = () => {
 
     return () => {
       cancelAnimationFrame(animId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', handleResize);
     };
   }, []);

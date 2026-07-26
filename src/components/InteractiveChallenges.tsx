@@ -229,10 +229,12 @@ export const InteractiveChallenges: React.FC<InteractiveChallengesProps> = ({ la
           <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4 max-w-2xl">
             <input
               type="text"
+              id="password-analyzer-input"
+              aria-label="Sample password to test strength and crack time"
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Type a sample password (e.g. Bantwal@2026!Secured)"
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-emerald-400 font-mono"
+              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/50 font-mono"
             />
 
             {password && (
