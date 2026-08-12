@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Language } from '../types';
 import { TRANSLATIONS, QUIZ_QUESTIONS } from '../data/translations';
 import { HelpCircle, CheckCircle2, XCircle, RotateCcw, Award, Sparkles } from 'lucide-react';
@@ -18,41 +18,30 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
   const [showExplanation, setShowExplanation] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [transitionState, setTransitionState] = useState<'idle' | 'exit' | 'enter'>('idle');
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const currentQ = QUIZ_QUESTIONS[currentIdx];
 
-  const handleOptionSelect = (optionIdx: number) => {
-    if (showExplanation || transitionState !== 'idle') return;
-    playClickSound();
-
-    const newAnswers = [...selectedAnswers, optionIdx];
-    setSelectedAnswers(newAnswers);
-    setShowExplanation(true);
-
-    const isCorrect = optionIdx === currentQ.correctIndex;
-    if (isCorrect) {
-      playSuccessSound();
-    } else {
-      playAlertSound();
-    }
-  };
-
-  const handleNext = () => {
+  const advanceToNext = (updatedAnswers: number[], nextIndex: number) => {
     if (transitionState !== 'idle') return;
-    playClickSound();
 
-    // Trigger smooth exit transition
     setTransitionState('exit');
 
     setTimeout(() => {
       setShowExplanation(false);
 
-      if (currentIdx + 1 < QUIZ_QUESTIONS.length) {
-        setCurrentIdx(prev => prev + 1);
+      if (nextIndex < QUIZ_QUESTIONS.length) {
+        setCurrentIdx(nextIndex);
       } else {
         setIsFinished(true);
         // Calculate total score
-        const totalScore = selectedAnswers.reduce((score, ansIdx, qIdx) => {
+        const totalScore = updatedAnswers.reduce((score, ansIdx, qIdx) => {
           return ansIdx === QUIZ_QUESTIONS[qIdx].correctIndex ? score + 1 : score;
         }, 0);
 
@@ -127,7 +116,6 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
         }
       }
 
-      // Trigger enter transition for new question or final score card
       setTransitionState('enter');
 
       setTimeout(() => {
@@ -136,10 +124,33 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
     }, 220);
   };
 
+  const handleOptionSelect = (optionIdx: number) => {
+    if (showExplanation || transitionState !== 'idle') return;
+    playClickSound();
+
+    const newAnswers = [...selectedAnswers, optionIdx];
+    setSelectedAnswers(newAnswers);
+    setShowExplanation(true);
+
+    const isCorrect = optionIdx === currentQ.correctIndex;
+    if (isCorrect) {
+      playSuccessSound();
+    } else {
+      playAlertSound();
+    }
+
+    // Automatically move to the next question without needing a Next button
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      advanceToNext(newAnswers, currentIdx + 1);
+    }, 1300);
+  };
+
   const handleRetry = () => {
     if (transitionState !== 'idle') return;
     playClickSound();
 
+    if (timerRef.current) clearTimeout(timerRef.current);
     setTransitionState('exit');
 
     setTimeout(() => {
@@ -245,19 +256,19 @@ export const SectionQuiz: React.FC<SectionQuizProps> = ({ lang, onQuizPassed }) 
 
           {/* Explanation Box */}
           {showExplanation && (
-            <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-4 animate-fade-in">
+            <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-2 animate-fade-in">
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 <span className="font-bold text-amber-400">Explanation: </span>
                 {lang === 'en' ? currentQ.explanationEn : currentQ.explanationKn}
               </p>
-              <button
-                type="button"
-                disabled={transitionState !== 'idle'}
-                onClick={handleNext}
-                className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 active:brightness-90 disabled:opacity-50 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-150 active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-              >
-                {currentIdx + 1 < QUIZ_QUESTIONS.length ? 'Next Question →' : 'View Final Score'}
-              </button>
+              <div className="flex items-center space-x-2 text-[11px] font-mono text-amber-400/90 pt-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping shrink-0" />
+                <span>
+                  {currentIdx + 1 < QUIZ_QUESTIONS.length
+                    ? 'Advancing to next question...'
+                    : 'Calculating final score...'}
+                </span>
+              </div>
             </div>
           )}
 

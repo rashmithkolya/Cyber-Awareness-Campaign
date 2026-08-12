@@ -63,13 +63,13 @@ export const FooterAndFeedback: React.FC<FooterAndFeedbackProps> = ({ lang }) =>
           <div className="flex items-center justify-center space-x-4 pb-1">
             <img
               src="./assets/images/logo-placeholder-1.png"
-              alt="Institution Logo Placeholder"
+              alt="Government Polytechnic Bantwal Logo"
               className="w-12 h-12 object-contain drop-shadow"
               referrerPolicy="no-referrer"
             />
             <img
               src="./assets/images/logo-placeholder-2.png"
-              alt="Technical Club Logo Placeholder"
+              alt="CSE Technical Club Logo"
               className="w-12 h-12 object-contain drop-shadow"
               referrerPolicy="no-referrer"
             />

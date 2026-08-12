@@ -3,13 +3,7 @@ import { Language, AppStage, UserData } from './types';
 import { Header } from './components/Header';
 import { LandingPage } from './components/LandingPage';
 import { CinematicReveal } from './components/CinematicReveal';
-import { AwarenessHero } from './components/AwarenessHero';
-import { SectionsOverview } from './components/SectionsOverview';
-import { SectionHotspots } from './components/SectionHotspots';
-import { InteractiveChallenges } from './components/InteractiveChallenges';
-import { SectionQuiz } from './components/SectionQuiz';
-import { SectionCertificate } from './components/SectionCertificate';
-import { FooterAndFeedback } from './components/FooterAndFeedback';
+import { AwarenessJourney } from './components/AwarenessJourney';
 import { CyberBackgroundAnimation } from './components/CyberBackgroundAnimation';
 import { getAudioMute, toggleAudioMute } from './utils/sound';
 
@@ -40,6 +34,10 @@ export default function App() {
   const handleToggleMute = () => {
     const nextMute = toggleAudioMute();
     setIsMuted(nextMute);
+  };
+
+  const handleUpdateUserData = (updated: Partial<UserData>) => {
+    setUserData(prev => ({ ...prev, ...updated }));
   };
 
   const handleLandingSubmit = (data: UserData) => {
@@ -100,47 +98,14 @@ export default function App() {
         />
       )}
 
-      {/* Stage 3: Cyber Awareness Campaign Modules */}
+      {/* Stage 3: Cyber Awareness Campaign 10-Step Interactive Journey */}
       {appStage === 'awareness' && (
-        <main className="space-y-12">
-          {/* Awareness Hero */}
-          <AwarenessHero
+        <main className="pb-12">
+          <AwarenessJourney
             lang={lang}
             userData={userData}
-            onStartLearning={scrollToLearning}
-            onJumpToCert={scrollToCert}
+            onUpdateUserData={handleUpdateUserData}
           />
-
-          {/* Main Content Sections Container */}
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-            
-            {/* Sections 1, 2, 4, 5 */}
-            <SectionsOverview lang={lang} />
-
-            {/* Section 3: Spot the Warning Signs (Interactive Hotspots) */}
-            <SectionHotspots lang={lang} />
-
-            {/* Sections 6 & 7: Real Life Scenarios & Interactive Mini-Games */}
-            <InteractiveChallenges lang={lang} />
-
-            {/* Section 8: Quiz */}
-            <SectionQuiz
-              lang={lang}
-              onQuizPassed={() => setQuizPassed(true)}
-            />
-
-            {/* Section 9: Local Certificate Generator */}
-            <SectionCertificate
-              lang={lang}
-              userData={userData}
-              isUnlocked={quizPassed}
-            />
-
-            {/* Section 10 & Footer */}
-            <FooterAndFeedback lang={lang} />
-
-          </div>
-
         </main>
       )}
 

@@ -9,25 +9,76 @@ interface SectionCertificateProps {
   lang: Language;
   userData: UserData;
   isUnlocked: boolean;
+  onUpdateUserData?: (data: Partial<UserData>) => void;
 }
 
 export const SectionCertificate: React.FC<SectionCertificateProps> = ({
   lang,
   userData,
-  isUnlocked
+  isUnlocked,
+  onUpdateUserData
 }) => {
   const t = TRANSLATIONS[lang];
   const certRef = useRef<HTMLDivElement>(null);
 
   const [showShareModal, setShowShareModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [nameInput, setNameInput] = useState(userData.name || '');
+  const [certStatus, setCertStatus] = useState<'input' | 'generating' | 'ready'>(
+    userData.name ? 'ready' : 'input'
+  );
+  const [genProgress, setGenProgress] = useState(0);
 
   const handleCopyCaption = () => {
     playSuccessSound();
-    const captionText = `I completed the Cyber Security Awareness Training & Scam Prevention Assessment by @gptbantwal CSE Technical Club (@blackbyte_cs)! Certified digital safety awareness. 🛡️✨`;
+    const captionText = `I completed the Cyber Security Awareness Training & Scam Prevention Assessment by @gptbantwal CSE Technical Club! Certified digital safety awareness. 🛡️✨`;
     navigator.clipboard.writeText(captionText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handleStartGeneration = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = nameInput.trim();
+    if (!trimmed) return;
+
+    playClickSound();
+    setCertStatus('generating');
+    setGenProgress(0);
+
+    const durationMs = 2200;
+    const intervalMs = 40;
+    const increment = (100 / (durationMs / intervalMs));
+
+    const timer = setInterval(() => {
+      setGenProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          setTimeout(() => {
+            if (onUpdateUserData) {
+              onUpdateUserData({ name: trimmed });
+            }
+            setCertStatus('ready');
+            playSuccessSound();
+            confetti({
+              particleCount: 100,
+              spread: 80,
+              origin: { y: 0.6 },
+              colors: ['#10b981', '#f59e0b', '#38bdf8', '#a855f7'],
+            });
+          }, 150);
+          return 100;
+        }
+        return prev + increment;
+      });
+    }, intervalMs);
+  };
+
+  const getGenStatusText = (progress: number) => {
+    if (progress < 30) return 'Initializing Digital Verification Engine...';
+    if (progress < 60) return 'Applying Cryptographic Verification Badge...';
+    if (progress < 85) return 'Generating Technical Club CSE Credentials...';
+    return 'Finalizing High-Resolution Certificate Document...';
   };
   const certId = useMemo(() => {
     const raw = userData.name ? userData.name.toUpperCase() : 'DIGITAL CITIZEN';
@@ -356,15 +407,140 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
         )}
       </div>
 
-      {!isUnlocked && (
-        <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-amber-300 text-xs sm:text-sm flex items-start space-x-3 no-print">
-          <Sparkles className="w-5 h-5 shrink-0 text-amber-400 mt-0.5" />
-          <div>
-            <span className="font-bold">How to earn your official certificate: </span>
-            <span>Complete the awareness topics above and pass the 5-question quiz with an 80%+ score. You can preview your Certificate of Participation below!</span>
+      {/* STAGE 1: CLEAN ANIMATED NAME INPUT SCREEN */}
+      {certStatus === 'input' && (
+        <div className="bg-slate-950/90 border border-amber-500/30 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6 text-center max-w-2xl mx-auto animate-reveal-up relative overflow-hidden no-print">
+          {/* Subtle Ambient Glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="space-y-3 relative z-10">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>DIGITAL PARTICIPATION CERTIFICATE</span>
+            </div>
+
+            <h3 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              Generate Your Official Certificate
+            </h3>
+
+            <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed">
+              Enter your full name as you would like it to appear on your official digitally verified Certificate of Participation issued by the Technical Club (CSE), Government Polytechnic Bantwal.
+            </p>
+          </div>
+
+          {/* Clean Animated Name Form */}
+          <form onSubmit={handleStartGeneration} className="space-y-4 max-w-md mx-auto relative z-10 pt-2">
+            <div className="relative">
+              <input
+                type="text"
+                value={nameInput}
+                onChange={(e) => setNameInput(e.target.value)}
+                placeholder="Enter your full name (e.g. Rahul Sharma)"
+                required
+                className="w-full px-5 py-4 bg-slate-900 border-2 border-slate-700 hover:border-amber-400/60 focus:border-amber-400 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-amber-400/20 text-base sm:text-lg font-semibold tracking-wide transition-all shadow-inner text-center"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-black text-sm sm:text-base uppercase tracking-widest shadow-2xl hover:brightness-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center space-x-2.5 group"
+            >
+              <Award className="w-5 h-5 text-slate-950" />
+              <span>GENERATE CERTIFICATE</span>
+              <CheckCircle2 className="w-5 h-5 text-slate-950 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </form>
+
+          <div className="pt-4 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-slate-400 font-mono relative z-10">
+            <div className="flex items-center justify-center space-x-1.5">
+              <Shield className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Digitally Verified</span>
+            </div>
+            <div className="flex items-center justify-center space-x-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Instant Client-Side</span>
+            </div>
+            <div className="flex items-center justify-center space-x-1.5">
+              <Award className="w-3.5 h-3.5 text-cyan-400" />
+              <span>GPT Bantwal CSE</span>
+            </div>
           </div>
         </div>
       )}
+
+      {/* STAGE 2: CINEMATIC GENERATION ANIMATION */}
+      {certStatus === 'generating' && (
+        <div className="bg-slate-950/95 border border-amber-500/40 rounded-3xl p-8 sm:p-12 shadow-2xl text-center max-w-xl mx-auto space-y-6 animate-reveal-up relative overflow-hidden no-print">
+          {/* Radial Ambient Glow */}
+          <div className="absolute inset-0 bg-gradient-to-b from-amber-500/10 via-purple-500/5 to-transparent pointer-events-none" />
+
+          {/* Glowing Animated Spinner Badge */}
+          <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
+            <div className="absolute inset-0 rounded-full border-4 border-amber-500/20 border-t-amber-400 animate-spin" />
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center text-slate-950 shadow-2xl shadow-amber-500/40 animate-pulse">
+              <Award className="w-9 h-9" />
+            </div>
+          </div>
+
+          <div className="space-y-2 relative z-10">
+            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+              Generating Certificate for <span className="text-amber-400">{nameInput}</span>
+            </h3>
+            <p className="text-xs sm:text-sm font-mono text-amber-300/90 h-6">
+              {getGenStatusText(genProgress)}
+            </p>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="space-y-2 relative z-10 max-w-md mx-auto">
+            <div className="h-3 w-full bg-slate-900 rounded-full overflow-hidden border border-slate-800 p-0.5 shadow-inner">
+              <div
+                className="h-full bg-gradient-to-r from-amber-500 via-emerald-400 to-cyan-400 rounded-full transition-all duration-75 ease-out shadow-lg"
+                style={{ width: `${Math.min(genProgress, 100)}%` }}
+              />
+            </div>
+            <div className="flex justify-between items-center text-[11px] font-mono text-slate-400">
+              <span>Processing...</span>
+              <span className="font-bold text-amber-400">{Math.round(genProgress)}%</span>
+            </div>
+          </div>
+
+          <div className="pt-2 text-[11px] text-slate-500 font-sans">
+            Technical Club • Computer Science Engineering • Government Polytechnic Bantwal
+          </div>
+        </div>
+      )}
+
+      {/* STAGE 3: CERTIFICATE GENERATED & MOUNTED IN DOM */}
+      {certStatus === 'ready' && (
+        <div className="space-y-6 animate-reveal-up">
+          {/* Certificate Issued Status Header Bar */}
+          <div className="bg-slate-950/80 border border-emerald-500/30 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 no-print shadow-xl">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shrink-0">
+                <CheckCircle2 className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="text-sm sm:text-base font-bold text-white">
+                  Certificate Issued for <span className="text-amber-400">{participantName}</span>
+                </h4>
+                <p className="text-xs text-slate-400">
+                  Certificate ID: <span className="font-mono text-emerald-400 font-semibold">{certId}</span> • Digitally Verified
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                playClickSound();
+                setCertStatus('input');
+              }}
+              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 hover:text-amber-200 border border-slate-700 rounded-xl text-xs font-semibold transition cursor-pointer shrink-0"
+            >
+              Change Name / Re-generate
+            </button>
+          </div>
 
       {/* Official A4 Landscape Certificate Display Container */}
       <div className="overflow-x-auto pb-4">
@@ -522,6 +698,8 @@ export const SectionCertificate: React.FC<SectionCertificateProps> = ({
           <span>Share on Instagram</span>
         </button>
       </div>
+    </div>
+  )}
 
       {/* Instagram Story Sharing Modal */}
       {showShareModal && (

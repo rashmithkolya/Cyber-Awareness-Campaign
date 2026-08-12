@@ -58,7 +58,7 @@ export const AwarenessHero: React.FC<AwarenessHeroProps> = ({
               </div>
               <div>
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                  Welcome, <span className="text-amber-400">{userData?.name || 'Visitor'}</span>!
+                  Welcome, <span className="text-amber-400">{userData?.name || 'Curious Explorer'}</span>!
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-300 font-medium">
                   Government Polytechnic Bantwal & CSE Technical Club Initiative
@@ -73,11 +73,11 @@ export const AwarenessHero: React.FC<AwarenessHeroProps> = ({
           {/* Short Initiative Explanation */}
           <div className="space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
             <p>
-              <strong>About this Initiative:</strong> What started as a simulated ₹500 reward offer was a hands-on cybersecurity exercise to demonstrate how phishing lures trick everyday citizens and users.
+              <strong>About this Initiative:</strong> What started as an intriguing "Unknown Surprise" was a hands-on cybersecurity demonstration showing how curiosity, mystery, and tempting offers lure everyday users into risky online clicks.
             </p>
             <p className="text-emerald-300 font-medium flex items-center space-x-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 inline" />
-              <span>Rest assured: Zero personal data was stored or transmitted. All input remained 100% private to your browser.</span>
+              <span>Rest assured: Zero personal information was collected on the landing page. Your session is 100% ethical and safe.</span>
             </p>
           </div>
 

@@ -25,6 +25,10 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const t = TRANSLATIONS[lang];
 
+  if (appStage === 'landing') {
+    return null;
+  }
+
   return (
     <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 text-white transition-all shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 md:h-22 flex items-center justify-between gap-3 sm:gap-6">

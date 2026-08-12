@@ -4,8 +4,6 @@ export type AppStage = 'landing' | 'reveal' | 'awareness';
 
 export interface UserData {
   name: string;
-  phone: string;
-  email: string;
 }
 
 export interface QuizQuestion {
